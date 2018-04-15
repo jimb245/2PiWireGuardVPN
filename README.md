@@ -149,7 +149,7 @@ sudo wg-quick up wg0
 
 ## Test the VPN tunnel locally
 
-Connect a device to one of the client private interfaces and start a browser.  If web access is working then you are almost finished - otherwise see the troubleshooting checks below. As a sanity check, confirm that there is traffic on the server's wg0 interface. This can be done on the server desktop with the command "ifconfig wg0", which shows transmitted/received counts. Alternatively you can continuouly monitor traffic using "vnstat -l -i wg0". Lastly check that DNS traffic is not leaking outside the tunnel by accessing a website like dnsleak.com from your device browser.
+Connect a device to one of the client private interfaces and start a browser.  If web access is working then you are almost finished (otherwise see the troubleshooting checks below). As a sanity check, confirm that there is traffic on the server's wg0 interface. This can be done on the server desktop with the command "ifconfig wg0", which shows transmitted/received counts. Alternatively you can continuouly monitor traffic using "vnstat -l -i wg0". Lastly check that DNS traffic is not leaking outside the tunnel by accessing a website like dnsleak.com from your device browser.
 
 <br><br>
 
