@@ -204,7 +204,7 @@ sudo ifup wlan1
 
 1. https://www.wireguard.com
 2. https://twit.tv/shows/floss-weekly/episodes/468
-3. https://www.ckn.io/blog/2017/11/14/wireguard-VPN-typical-setup.html
-4. https://www.ckn.io/blog/2017/12/28/wireguard-VPN-portable-raspberry-pi-setup.html
+3. https://www.ckn.io/blog/2017/11/14/wireguard-VPN-typical-setup/
+4. https://www.ckn.io/blog/2017/12/28/wireguard-VPN-portable-raspberry-pi-setup/
 5. https://danrl.com/blog/2016/travel-wifi.html
 
