@@ -33,10 +33,12 @@ The server doesn't require the onboard wifi of the Pi 3 so a Pi 2 could be subst
 
 Copying the images to the cards is the same as for a regular Raspbian install.
 
-<br>
+<br><br>
+
 ### 2. Insert the sd cards and power up the Pi's
 
-<br>
+<br><br>
+
 ### 3. Configure the server - Part I
 
 The server is configured in two passes because of the need to exchange WireGuard keys between the Pi's.
@@ -61,7 +63,8 @@ Copy the string from server_public_key over to your VNC client machine.
 
 #### 3.4 Close the VNC connection
 
-<br>
+<br><br>
+
 ### 4. Configure the client
 
 #### 4.1 Access the client Pi using VNC
