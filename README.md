@@ -1,4 +1,4 @@
-WireGuard Portable VPN Client and Server on Raspberry Pi 3's
+# WireGuard Portable VPN Client and Server on Raspberry Pi 3's
 
 This README describes how you can set up and use a portable WireGuard VPN access point and server on Raspberry Pi 3's starting from the provided Raspbian-based image files. The images already contain all the necessary software so setup consists of installing the images on the Pi's and editing some parameters like passwords and IP addresses. For general information about WireGuard see References 1-2 below. References 3-5 are install guides for some WireGuard configurations on Ubuntu and Raspbian. The images provided here are adapted from those guides.
 
@@ -14,7 +14,7 @@ Software versions on the images:
 - Raspbian Stretch (March 2018)
 - WireGuard 0.0.20180304
 
-What You Will Need
+## What You Will Need
 
 - Two Raspberry Pi 3's with cases
 - Two 8GB microSD cards
@@ -27,25 +27,27 @@ What You Will Need
 
 The server doesn't require the onboard wifi of the Pi 3 so a Pi 2 could be substituted.
 
+## Setup
+
 1. Download the images and copy to sd cards
 
 Copying the images to the cards is the same as for a regular Raspbian install.
 
 
-2. Insert the sd cards and power up the Pi's
+1. Insert the sd cards and power up the Pi's
 
 
-3. Configure the server - Part I
+1. Configure the server - Part I
 
 The server is configured in two passes because of the need to exchange WireGuard keys between the Pi's.
 
-3.1 Connect the server to your network with an ethernet cable.
+  1. Connect the server to your network with an ethernet cable.
 
-3.2 Access the server using VNC
+  1. Access the server using VNC
 
 Determine the IP address assigned by your router to the server ethernet interface. You can usually find this by logging into your router's user interface. Alternatively phone apps like Fing can list devices on your network. In your VNC client connect to the server address with the default password, which is "raspberry". Start a terminal window on the VNC desktop.
 
-3.3 Configure WireGuard
+1. Configure WireGuard
 
 cd ~/WireGuard
 Umask 077
@@ -56,12 +58,12 @@ In /etc/wireguard/wg0.conf substitute the string from server_private_key into th
 
 Copy the string from server_public_key over to your VNC client machine.
 
-3.4 Close the VNC connection
+1. Close the VNC connection
 
 
-4. Configure the client
+1. Configure the client
 
-4.1 Access the client Pi using VNC
+  1. Access the client Pi using VNC
 
 Disconnect the VNC device from your main network and connect it to one of the private interfaces:
 
