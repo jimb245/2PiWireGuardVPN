@@ -29,25 +29,25 @@ The server doesn't require the onboard wifi of the Pi 3 so a Pi 2 could be subst
 
 ## Setup
 
-1. Download the images and copy to sd cards
+### 1. Download the images and copy to sd cards
 
 Copying the images to the cards is the same as for a regular Raspbian install.
 
 
-1. Insert the sd cards and power up the Pi's
+### 2. Insert the sd cards and power up the Pi's
 
 
-1. Configure the server - Part I
+### 3. Configure the server - Part I
 
 The server is configured in two passes because of the need to exchange WireGuard keys between the Pi's.
 
-  1. Connect the server to your network with an ethernet cable.
+#### 3.1 Connect the server to your network with an ethernet cable.
 
-  1. Access the server using VNC
+#### 3.2 Access the server using VNC
 
 Determine the IP address assigned by your router to the server ethernet interface. You can usually find this by logging into your router's user interface. Alternatively phone apps like Fing can list devices on your network. In your VNC client connect to the server address with the default password, which is "raspberry". Start a terminal window on the VNC desktop.
 
-1. Configure WireGuard
+#### 3.3 Configure WireGuard
 
 cd ~/WireGuard
 Umask 077
@@ -58,12 +58,12 @@ In /etc/wireguard/wg0.conf substitute the string from server_private_key into th
 
 Copy the string from server_public_key over to your VNC client machine.
 
-1. Close the VNC connection
+#### 3.4 Close the VNC connection
 
 
-1. Configure the client
+### 4. Configure the client
 
-  1. Access the client Pi using VNC
+#### 4.1 Access the client Pi using VNC
 
 Disconnect the VNC device from your main network and connect it to one of the private interfaces:
 
@@ -72,11 +72,11 @@ Disconnect the VNC device from your main network and connect it to one of the pr
 
 Then connect to VNC with the default password, which is "raspberry". 
 
-4.2 Connect the public wifi interface
+#### 4.2 Connect the public wifi interface
 
 Use the wifi menu on the virtual desktop to connect the Pi to your wifi network
 
-4.3 Configure WireGuard
+#### 4.3 Configure WireGuard
 
 Start a terminal window on the VNC desktop.
 
@@ -89,23 +89,23 @@ In /etc/wireguard/wg0.conf substitute the string from client_private_key into th
 
 Copy the string from client_public_key over to your VNC client machine.
 
-4.4 Start WireGuard
+#### 4.4 Start WireGuard
 
 sudo wg-quick up wg0
 
-4.5 Change default login passwords
+#### 4.5 Change default login passwords
 
 Change the pi user password with the passwd command
 Change the VNC password using the VNC settings menu on the virtual desktop
 
-4.6 Change default SSID and password of private wifi interface
+#### 4.6 Change default SSID and password of private wifi interface
 
 sudo nano /etc/hostapd/hostapd.conf
 sudo systemctl restart hostapd
 
 Test the new passwords by reconnecting using the private wifi interface.
 
-4.7 Close the VNC connection
+#### 4.7 Close the VNC connection
 
 
 5. Configure the server - Part II
