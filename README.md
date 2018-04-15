@@ -62,6 +62,7 @@ Copy the string from server_public_key over to your VNC client machine.
 #### 3.4 Close the VNC connection
 
 
+
 ### 4. Configure the client
 
 #### 4.1 Access the client Pi using VNC
@@ -111,6 +112,7 @@ Test the new passwords by reconnecting using the private wifi interface.
 #### 4.7 Close the VNC connection
 
 
+
 ### 5. Configure the server - Part II
 
 #### 5.1 Reconnect to the server with VNC as before 
@@ -137,9 +139,12 @@ sudo wg-quick up wg0
 #### 5.5 Close the VNC connection
 
 
+
 ### 6. Test the VPN tunnel locally
 
 Connect a device to one of the client private interfaces and start a browser.  If web access is working then you are almost finished. As a sanity check, confirm that there is traffic on the server's wg0 interface. This can be done on the server desktop with the command "ifconfig wg0", which shows transmitted/received counts. Alternatively you can continuouly monitor traffic using "vnstat -l -i wg0". Lastly check that DNS traffic is not leaking outside the tunnel by accessing a website like dnsleak.com from your device browser.
+
+
 
 ### 7. Test the VPN client remotely
 
@@ -155,6 +160,8 @@ Use a site like whoer.net to check that your ip address is the same as your Wire
 sudo ifdown wlan1
 sudo ifup wlan1
 ````
+
+
 
 ### 8. Troubleshooting
 
@@ -175,6 +182,7 @@ sudo ifup wlan1
 - Try a browser on the server VNC desktop to confirm it has internet access
 
 
+
 ### 9. Technical Notes
 
 - The wifi channel used by the client Pi's private interface is set in /etc/hostapd/hostapd.conf. It can be changed if needed to avoid interference. A reboot is needed following a change.
@@ -182,11 +190,11 @@ sudo ifup wlan1
 - It would be possible to have a Pi 3 server connect to the local network over wifi rather than ethernet, though in general the ethernet connection likely will provide better performance. To do this add the following iptables entry:
 
 ```
-sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o wlan0 -j MASQUERADE
-netfilter-persistent save
+    sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o wlan0 -j MASQUERADE
+    netfilter-persistent save
 ```
     
-The initial wifi authentication will require accessing the server another way, which could be a temporary ethernet connection or attaching keyboard and monitor to the Pi. 
+     The initial wifi authentication will require accessing the server another way, which could be a temporary ethernet connection or attaching keyboard and monitor to the Pi. 
 
 - In the client Pi setup for Raspbian Stretch (but not Jessie) there seems to be a basic conflict when combining dhcpcd, dnsmasq, and hostapd services to provide both a DHCP-generated ip addess for the public interface and a static ip for the private wifi interface. To work around this problem /etc/rc.local is used to start dhcpcd on boot because it is prevented from starting normally. This is a hack that may need to be revisited in the future.
 
