@@ -204,7 +204,7 @@ sudo ifup wlan1
 
 1. https://www.wireguard.com
 2. https://twit.tv/shows/floss-weekly/episodes/468
-3. [WireGuard VPN: Typical Setup]([https://www.ckn.io)
+3. [WireGuard VPN: Typical Setup](https://www.ckn.io)
 4. [WireGuard VPN: Portable Raspberry Pi Setup](https://www.ckn.io)
-5. https://danrl.com/blog/2016/travel-wifi.html
+5. [Building an encrypted travel wifi router](https://danrl.com)
 
