@@ -1,6 +1,6 @@
 # WireGuard Portable VPN Client and Server on Raspberry Pi 3's
 
-![alt text](https://github.com/jimb245/2PiWireGuardVPN/2PiVPN.jpg)
+![alt text](https://github.com/jimb245/2PiWireGuardVPN/blob/master/2PiVPN.jpg)
 
 This post describes how you can set up and use a portable WireGuard VPN access point and server on Raspberry Pi 3's starting from the provided Raspbian-based image files. The images already contain all the necessary software so setup consists of installing the images on the Pi's and editing some parameters like passwords and IP addresses. For general information about WireGuard see References 1-2 below. References 3-5 are install guides for some WireGuard configurations on Ubuntu and Raspbian. The images provided here are adapted from those guides.
 
