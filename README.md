@@ -161,7 +161,9 @@ Now you should be able to connect to the server from any wifi location. Remember
 sudo wg-quick up wg0
 ```
 
-Use a site like whoer.net to check that your ip address is the same as your WireGuard server. If the wifi interface is not needed it can be disabled/enabled with the commands:
+Use a site like whoer.net to check that your ip address is the same as your WireGuard server. 
+
+If the wifi interface is not needed it can be disabled/enabled with the commands:
 
 ````
 sudo ifdown wlan1
