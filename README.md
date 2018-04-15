@@ -107,7 +107,8 @@ sudo wg-quick up wg0
 
 #### 4.6 Change default SSID and password of private wifi interface
 
-```sudo nano /etc/hostapd/hostapd.conf
+```
+sudo nano /etc/hostapd/hostapd.conf
 sudo systemctl restart hostapd
 ```
 
