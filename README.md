@@ -107,6 +107,8 @@ sudo wg-quick up wg0
 
 #### 4.6 Change default SSID and password of private wifi interface
 
+The current values are 'raspi' and 'raspberry'. Edit the config file and restart hostapd.
+
 ```
 sudo nano /etc/hostapd/hostapd.conf
 sudo systemctl restart hostapd
