@@ -117,14 +117,16 @@ Test the new passwords by reconnecting using the private wifi interface.
 
 #### 5.2 Finish configuring WireGuard
 
-```sudo nano /etc/wireguard/wg0.conf
+```
+sudo nano /etc/wireguard/wg0.conf
 ```
 
 In /etc/wireguard/wg0.conf substitute the client_public_key value copied earlier from the client
 
 #### 5.3 Start WireGuard
 
-```sudo wg-quick up wg0
+```
+sudo wg-quick up wg0
 ```
 
 #### 5.4 Change default login passwords
@@ -143,12 +145,14 @@ Connect a device to one of the client private interfaces and start a browser.  I
 
 Now you should be able to connect to the server from any wifi location. Remember to start WireGuard after establishing the wifi connection on the VNC desktop:
 
-```sudo wg-quick up wg0
+```
+sudo wg-quick up wg0
 ```
 
 Use a site like whoer.net to check that your ip address is the same as your WireGuard server. If the wifi interface is not needed it can be disabled/enabled with the commands:
 
-````sudo ifdown wlan1
+````
+sudo ifdown wlan1
 sudo ifup wlan1
 ````
 
@@ -177,8 +181,10 @@ sudo ifup wlan1
 
 - It would be possible to have a Pi 3 server connect to the local network over wifi rather than ethernet, though in general the ethernet connection likely will provide better performance. To do this add the following iptables entry:
 
-    sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o wlan0 -j MASQUERADE
-    netfilter-persistent save
+```
+sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o wlan0 -j MASQUERADE
+netfilter-persistent save
+```
     
 The initial wifi authentication will require accessing the server another way, which could be a temporary ethernet connection or attaching keyboard and monitor to the Pi. 
 
