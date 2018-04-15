@@ -113,7 +113,8 @@ Test the new passwords by reconnecting using the private wifi interface.
 
 #### 4.7 Close the VNC connection
 
-<br>
+<br><br>
+
 ### 5. Configure the server - Part II
 
 #### 5.1 Reconnect to the server with VNC as before 
@@ -139,12 +140,14 @@ sudo wg-quick up wg0
 
 #### 5.5 Close the VNC connection
 
-<br>
+<br><br>
+
 ### 6. Test the VPN tunnel locally
 
 Connect a device to one of the client private interfaces and start a browser.  If web access is working then you are almost finished. As a sanity check, confirm that there is traffic on the server's wg0 interface. This can be done on the server desktop with the command "ifconfig wg0", which shows transmitted/received counts. Alternatively you can continuouly monitor traffic using "vnstat -l -i wg0". Lastly check that DNS traffic is not leaking outside the tunnel by accessing a website like dnsleak.com from your device browser.
 
-<br>
+<br><br>
+
 ### 7. Test the VPN client remotely
 
 Now you should be able to connect to the server from any wifi location. Remember to start WireGuard after establishing the wifi connection on the VNC desktop:
@@ -160,7 +163,8 @@ sudo ifdown wlan1
 sudo ifup wlan1
 ````
 
-<br>
+<br><br>
+
 ### 8. Troubleshooting
 
 - Check that both WireGuard interfaces are up as shown by ifconfig
@@ -179,7 +183,8 @@ sudo ifup wlan1
 
 - Try a browser on the server VNC desktop to confirm it has internet access
 
-<br>
+<br><br>
+
 ### 9. Technical Notes
 
 - The wifi channel used by the client Pi's private interface is set in /etc/hostapd/hostapd.conf. It can be changed if needed to avoid interference. A reboot is needed following a change.
