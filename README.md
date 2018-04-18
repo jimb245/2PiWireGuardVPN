@@ -8,7 +8,7 @@ To use this 2-Pi VPN you connect the server with an ethernet cable to a protecte
 
 The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals. Lastly you start the WireGuard connection - it does not start on boot because it would interfere with accessing captive portal servers. At the end of the session you use VNC again to safely shut down the Pi.
 
-Since WireGuard currently runs on Linux-derivative platforms the access point approach is on the one hand a necessity in order to support all devices; on the other hand it provides more isolation from public networks than would apps running on the devices.
+Since WireGuard currently runs on Linux derivatives the access point approach is on the one hand a necessity in order to support all devices; on the other hand it provides more isolation from the public network and probably a more open platform than would apps running on the devices.
 
 If you are connecting your portable device over ethernet then the private wifi interface is not needed and optionally you can shut it down to avoid interference or to save power when using a battery with the Pi. Portable devices that lack an ethernet port may still be usable in this mode with an adapter if they support USB OTG.
 
