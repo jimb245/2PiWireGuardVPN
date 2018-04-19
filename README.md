@@ -10,7 +10,7 @@ The portable access point is similar to a travel router, with both public and pr
 
 If you are connecting your portable device over ethernet then the private wifi interface is not needed and optionally you can shut it down to avoid interference or to save power when using a battery with the Pi. Portable devices that lack an ethernet port may still be usable in this mode with an adapter if they support USB OTG.
 
-Of course installing the server on your home network won't help if your goal is to prevent snooping by your home ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. One thing to note is that some video streaming services will block traffic that appears to come from the well-known cloud providers so you may not want to funnel your entire home network through a cloud VPN.
+Of course installing the server on your home network won't help if your goal is to prevent snooping by your home ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. On the other hand having a server with your home IP can help with some services that try to block VPN's or impose geographic restrictions.
 
 Software versions on the images:
 - Raspbian Stretch (March 2018)
