@@ -8,8 +8,6 @@ To use this 2-Pi VPN you connect the server with an ethernet cable to a protecte
 
 The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals. Lastly you start the WireGuard connection - it does not start on boot because it would interfere with accessing captive portal servers. At the end of the session you use VNC again to safely shut down the Pi.
 
-Since WireGuard currently runs on Linux derivatives the access point approach is on the one hand a necessity in order to support all devices; on the other hand it provides more isolation from the public network and probably a more open platform than would apps running on the devices.
-
 If you are connecting your portable device over ethernet then the private wifi interface is not needed and optionally you can shut it down to avoid interference or to save power when using a battery with the Pi. Portable devices that lack an ethernet port may still be usable in this mode with an adapter if they support USB OTG.
 
 Of course installing the server on your home network won't help if your goal is to prevent snooping by your home ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. One thing to note is that some video streaming services will block traffic that appears to come from the well-known cloud providers so you may not want to funnel your entire home network through a cloud VPN.
@@ -51,7 +49,7 @@ The server is configured in two passes because of the need to exchange WireGuard
 
 #### 3.2 Access the server using VNC
 
-Determine the IP address assigned by your router to the server ethernet interface. You can usually find this by logging into your router's user interface. Alternatively phone apps like Fing can list devices on your network. In your VNC client connect to the server address with the default password, which is "raspberry". Start a terminal window on the VNC desktop.
+Determine the IP address assigned by your router to the server ethernet interface. You can usually find this by logging into your router's user interface. Alternatively phone apps like Fing can list devices on your network. In your VNC app connect to the server address with the default password, which is "raspberry". Start a terminal window on the VNC desktop.
 
 #### 3.3 Configure WireGuard
 
@@ -69,7 +67,7 @@ Copy the string from server_public_key over to your VNC client machine.
 
 <br><br>
 
-### 4. Configure the client
+### 4. Configure the client Pi
 
 #### 4.1 Access the client Pi using VNC
 
@@ -78,7 +76,12 @@ Disconnect the VNC device from your main network and connect it to one of the pr
 - wifi using the default SSID and password, "raspi" and "raspberry"
 - ethernet cable
 
-Then connect to VNC with the default password, which is "raspberry". 
+Then in the VNC app connect to the Pi address that corresponds to the interface:
+
+- 10.100.100.1 for wifi
+- 10.150.150.1 for ethernet
+
+using the default password, which is "raspberry". 
 
 #### 4.2 Connect the public wifi interface
 
