@@ -2,17 +2,15 @@
 
 ![alt text](https://github.com/jimb245/2PiWireGuardVPN/blob/master/2PiVPN.jpg)
 
-This post describes setting up a portable WireGuard VPN access point and server on Raspberry Pi 3's. The shortcut is to start from the provided Raspbian-based image files which contain all the necessary software so setup consists of installing the images on the Pi's and editing some parameters like passwords and IP addresses. The setup starting from the base Rasbian images is here and is quite a bit lengthier. For general information about WireGuard see References 1-2 below. References 3-5 are install guides for some WireGuard configurations on Ubuntu and Raspbian.
+This post describes setting up a portable WireGuard VPN access point and server on Raspberry Pi 3's. The shortcut method is to start from the provided Raspbian-based image files which contain all the necessary software so setup consists of installing the images on the Pi's and editing some parameters like passwords and IP addresses. The setup starting from the base Rasbian images is here and is quite a bit lengthier. For general information about WireGuard see References 1-2 below. References 3-5 are install guides for some WireGuard configurations on Ubuntu and Raspbian.
 
 To use this 2-Pi VPN the server is connected with an ethernet cable to your home network, or potentially any other protected network with internet access. UDP packets from the internet must be able to reach the WireGuard port on the server so the port needs to be forwarded on the local router. If you happen to be running a dd-wrt based router then an alternative would be to install WireGuard on the router itself. 
 
-The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals.
+The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals. At the end of the session the desktop can be used to safely shutdown the Pi to avoid potentially corrupting the sdcard.
 
-The wireGuard developers are working on cross-platform app
+The wireGuard developers are working on cross-platform apps so the usefulness of the access point approach versus apps depends on how many devices are connecting and what apps are available. The access point does provide an extra layer of isolation and updatable security.
 
-If you are connecting your portable device over ethernet then the private wifi interface is not needed and optionally you can shut it down to avoid interference or to save power when using a battery with the Pi. Portable devices that lack an ethernet port may still be usable in this mode with an adapter if they support USB OTG.
-
-Of course installing the server on your home network won't help if your goal is to prevent snooping by your home ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. On the other hand having a server with your home IP can help with some services that try to block VPN's or impose geographic restrictions.
+Of course installing the server on a home network won't help if the goal is to prevent snooping an ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. On the other hand having a server with your home IP can help with some services that try to block VPN's or impose geographic restrictions.
 
 Software versions on the images:
 - Raspbian Stretch (March 2018)
@@ -35,7 +33,16 @@ The server doesn't require the onboard wifi of the Pi 3 so a Pi 2 could be subst
 
 ### 1. Download the images and copy to sd cards
 
-Copying the images to the cards is the same as for a regular Raspbian install.
+Copying the images to the cards is the same as for a regular Raspbian install. However to preserve the image size so that backup copies can safely be made, use the following Linux commands or their equivalents:
+
+```
+dd bs=1M count=7217 if=(server|client).img of=/dev/sdx
+```
+```
+dd bs=1M count=7217 if=/dev/sdx of=backup.img
+```
+
+where sdx is the device name assigned to the card.
 
 <br><br>
 
@@ -49,9 +56,11 @@ The server is configured in two passes because of the need to exchange WireGuard
 
 #### 3.1 Connect the server to your network with an ethernet cable.
 
+Modify local router settings to forward port 51820. You will probably want to either reserve a particular address for the server in the router's DHCP settings or assign a static address.
+
 #### 3.2 Access the server using VNC
 
-Determine the IP address assigned by your router to the server ethernet interface. You can usually find this by logging into your router's user interface. Alternatively phone apps like Fing can list devices on your network. In your VNC app connect to the server address with the default password, which is "raspberry". Start a terminal window on the VNC desktop.
+Determine the IP address assigned by your router to the server ethernet interface. In a VNC viewer app on a device on the local network connect to the server address using the default password, which is "raspberry". Start a terminal window on the VNC desktop.
 
 #### 3.3 Configure WireGuard
 
@@ -63,7 +72,7 @@ sudo nano /etc/wireguard/wg0.conf
 
 In /etc/wireguard/wg0.conf substitute the string from server_private_key into the file.
 
-Copy the string from server_public_key over to your VNC client machine.
+Copy the string from server_public_key over to your VNC viewer machine.
 
 #### 3.4 Close the VNC connection
 
@@ -73,12 +82,12 @@ Copy the string from server_public_key over to your VNC client machine.
 
 #### 4.1 Access the client Pi using VNC
 
-Disconnect the VNC device from your main network and connect it to one of the private interfaces:
+Disconnect the VNC viewer device from your local network and connect it to one of the private interfaces:
 
 - wifi using the default SSID and password, "raspi" and "raspberry"
 - ethernet cable
 
-Then in the VNC app connect to the Pi address that corresponds to the interface:
+Then in the VNC viewer connect to the Pi address that corresponds to the interface:
 
 - 10.100.100.1 for wifi
 - 10.150.150.1 for ethernet
@@ -87,7 +96,7 @@ using the default password, which is "raspberry".
 
 #### 4.2 Connect the public wifi interface
 
-Use the wifi menu on the virtual desktop to connect the Pi to your wifi network
+Use the wifi menu on the virtual desktop to connect the Pi to your local wifi network
 
 #### 4.3 Configure WireGuard
 
@@ -99,18 +108,24 @@ wg genkey | tee client_private_key | wg pubkey > client_public_key
 sudo nano /etc/wireguard/wg0.conf
 ```
 
-In /etc/wireguard/wg0.conf substitute the string from client_private_key into the file, then substiute the server_public_key value copied earlier from the server. Lastly substitute the public IP address of your network into the file. You can get this from your router user interface or by browsing a website like whoer.net. If the network IP is not static then a DDNS hostname can also be used.
+In /etc/wireguard/wg0.conf substitute the string from client_private_key into the file, then substiute the server_public_key value copied earlier from the server. Lastly substitute the public IP address of your network into the file. You can get this from your router user interface or by browsing a website like whoer.net. If the network IP is not very static then a DDNS hostname can also be used.
 
-Copy the string from client_public_key over to your VNC client machine.
+Copy the string from client_public_key over to your VNC viewer machine.
 
 #### 4.4 Start WireGuard
 
+```
 sudo wg-quick up wg0
+```
+
+Check that the "ifconfig" command shows a "wg0" interface has been created.
 
 #### 4.5 Change default login passwords
 
 - Change the pi user password with the passwd command
 - Change the VNC password using the VNC settings menu on the virtual desktop
+
+The Pi is also protected by a firewall on the public interface and the fact that the private wifi key is secret.
 
 #### 4.6 Change default SSID and password of private wifi interface
 
@@ -121,7 +136,7 @@ sudo nano /etc/hostapd/hostapd.conf
 sudo systemctl restart hostapd
 ```
 
-Test the new passwords by reconnecting using the private wifi interface.
+Test the new passwords by reconnecting using the private wifi interface. If there are problems you can get back in using the wired connection to check settings or reboot.
 
 #### 4.7 Close the VNC connection
 
@@ -145,10 +160,14 @@ In /etc/wireguard/wg0.conf substitute the client_public_key value copied earlier
 sudo wg-quick up wg0
 ```
 
+Check that the "ifconfig" command shows a "wg0" interface created.
+
 #### 5.4 Change default login passwords
 
 - Change the pi user password with the passwd command
 - Change the VNC password using the VNC settings menu on the virtual desktop
+
+Good to do even though it's behind a router.
 
 #### 5.5 Close the VNC connection
 
@@ -156,19 +175,13 @@ sudo wg-quick up wg0
 
 ## Test the VPN tunnel locally
 
-Connect a device to one of the client private interfaces and start a browser.  If web access is working then you are almost finished (otherwise see the troubleshooting checks below). As a sanity check, confirm that there is traffic on the server's wg0 interface. This can be done on the server desktop with the command "ifconfig wg0", which shows transmitted/received counts. Alternatively you can continuouly monitor traffic using "vnstat -l -i wg0". Lastly check that DNS traffic is not leaking outside the tunnel by accessing a website like dnsleak.com from your device browser.
+Connect a device to one of the client private interfaces and start a browser on it.  If web access is working then you are almost finished (otherwise see the troubleshooting checks below). As a sanity check, confirm that there is traffic on the server's wg0 interface. This can be done on the server Pi desktop with the command "ifconfig wg0", which shows transmitted/received counts. Alternatively you can continuouly monitor traffic using "vnstat -l -i wg0". Lastly check that DNS traffic is not leaking outside the tunnel by accessing a website like dnsleak.com from your attached device browser.
 
 <br><br>
 
 ## Test the VPN client remotely
 
-Now you should be able to connect to the server from any wifi location. Remember to start WireGuard after establishing the wifi connection on the VNC desktop:
-
-```
-sudo wg-quick up wg0
-```
-
-Use a site like whoer.net to check that your ip address is the same as your WireGuard server. 
+Now you should be able to connect to the server from any wifi location. Use a site like whoer.net to check that your ip address is the same as your WireGuard server. 
 
 If the wifi interface is not needed it can be disabled/enabled with the commands:
 
@@ -191,7 +204,7 @@ sudo ifup wlan1
 
 - Try a numeric ip web address to see if problem is with DNS. DNS lookups are handled by the unbound resolver running on the server.
 
-- Try a browser on the client VNC desktop to see if problem is between your device and the Pi
+- Try a browser on the client VNC desktop to confirm it has internet access.
 
 - Check if server can be pinged through the tunnel from client VNC desktop - ping 10.200.200.1 If not then there is likely a problem with WireGuard configuration or routing has been modified. 
 
@@ -203,7 +216,7 @@ sudo ifup wlan1
 
 - The wifi channel used by the client Pi's private interface is set in /etc/hostapd/hostapd.conf. It can be changed if needed to avoid interference. A reboot is needed following a change.
 
-- It would be possible to have a Pi 3 server connect to the local network over wifi rather than ethernet, though in general the ethernet connection likely will provide better performance. To do this add the following iptables entry. The initial wifi authentication will require accessing the server another way, which could be a temporary ethernet connection or attaching keyboard and monitor to the Pi. 
+- It would be possible to have a Pi 3 server connect to the local network over wifi rather than wireed ethernet. To do this add the following iptables entry. The initial wifi authentication will require accessing the server another way, which could be a temporary ethernet connection or attaching keyboard and monitor to the Pi. 
 
 ```
     sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o wlan0 -j MASQUERADE
