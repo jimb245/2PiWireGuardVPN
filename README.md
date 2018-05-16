@@ -153,7 +153,7 @@ Test the new passwords by reconnecting using the private wifi interface. If ther
 
 ```
 sudo nano /etc/wireguard/wg0.conf
-```sudo systemctl enable wg-quick@wg0.service
+```
 
 In /etc/wireguard/wg0.conf substitute the client_public_key value copied earlier from the client
 
