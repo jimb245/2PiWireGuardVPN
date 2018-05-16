@@ -10,7 +10,7 @@ The portable access point is similar to a travel router, with both public and pr
 
 The wireGuard developers are working on cross-platform apps so the usefulness of the access point approach versus apps depends on how many devices are connecting and what apps are available. The access point does provide an extra layer of isolation and updatable security.
 
-Of course installing the server on a home network won't help if the goal is to prevent snooping an ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. On the other hand having a server with your home IP can help with some services that try to block VPN's or impose geographic restrictions.
+Of course installing the server on a home network won't help if the goal is to prevent snooping by an ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. On the other hand having a server with your home IP can help with some services that try to block VPN's or impose geographic restrictions.
 
 Software versions on the images:
 - Raspbian Stretch (March 2018)
@@ -108,7 +108,9 @@ wg genkey | tee client_private_key | wg pubkey > client_public_key
 sudo nano /etc/wireguard/wg0.conf
 ```
 
-In /etc/wireguard/wg0.conf substitute the string from client_private_key into the file, then substiute the server_public_key value copied earlier from the server. Lastly substitute the public IP address of your network into the file. You can get this from your router user interface or by browsing a website like whoer.net. If the network IP is not very static then a DDNS hostname can also be used.
+In /etc/wireguard/wg0.conf substitute the string from client_private_key into the file, then substiute the server_public_key value copied earlier from the server. Lastly substitute the public IP address of your network into the file. You can get this from your router user interface or by browsing a website like whoer.net. If the network IP is not very static then a DDNS hostname can also sudo systemctl enable wg-quick@wg0.service
+
+be used.
 
 Copy the string from client_public_key over to your VNC viewer machine.
 
@@ -116,9 +118,10 @@ Copy the string from client_public_key over to your VNC viewer machine.
 
 ```
 sudo wg-quick up wg0
+sudo systemctl enable wg-quick@wg0.service
 ```
 
-Check that the "ifconfig" command shows a "wg0" interface has been created.
+Check that the "ifconfig" command shows a "wg0" interface has been created. From now on wireGuard will start on boot.
 
 #### 4.5 Change default login passwords
 
@@ -150,7 +153,7 @@ Test the new passwords by reconnecting using the private wifi interface. If ther
 
 ```
 sudo nano /etc/wireguard/wg0.conf
-```
+```sudo systemctl enable wg-quick@wg0.service
 
 In /etc/wireguard/wg0.conf substitute the client_public_key value copied earlier from the client
 
@@ -158,9 +161,10 @@ In /etc/wireguard/wg0.conf substitute the client_public_key value copied earlier
 
 ```
 sudo wg-quick up wg0
+sudo systemctl enable wg-quick@wg0.service
 ```
 
-Check that the "ifconfig" command shows a "wg0" interface created.
+Check that the "ifconfig" command shows a "wg0" interface created. From now on WireGuard will start on boot.
 
 #### 5.4 Change default login passwords
 
