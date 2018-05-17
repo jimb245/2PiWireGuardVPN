@@ -146,8 +146,6 @@ Edit file /etc/sysctl.conf and uncomment or add the line:
 net.ipv4.ip_forward=1
 ```
 
-This will allow packets arriving in the VPN tunnel to continue out of the server.
-
 Enable the change:
 
 ```
@@ -379,7 +377,7 @@ iface eth0 inet static
 ```
 
 Replace the contents of /etc/hostapd/hostapd.conf with the following lines, substituting values 
-for ssid and wpa_password:
+for ssid and wpa_passphrase:
 
 ```
 interface=wlan0
