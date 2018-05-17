@@ -1,8 +1,8 @@
 
 
-#VPN Setup Starting From Base Raspbian Images
+# VPN Setup Starting From Base Raspbian Images
 
-##1. Install Raspbian
+## 1. Install Raspbian
 
 Install Raspbian Stretch on the Pi's in the usual way. Eventually the client needs to be configured 
 to boot headless with VNC desktop and it's probably good to set up both Pi's that way from the 
@@ -25,7 +25,7 @@ Use terminals on the VNC desktops for the following steps.
 
 
 
-##2. Install WireGuard on both Pi's
+## 2. Install WireGuard on both Pi's
 
 This is adapted from wireguard.com/install, "Option B) Compiling from Source", for Debian
 
