@@ -110,7 +110,7 @@ PublicKey = <client-public-key>
 AllowedIPs = 10.200.200.2/32
 ```
 
-replacing <server-private-key> and <client-public-key> with the values generated previously.
+replacing server-private-key and client-public-key with the values generated previously.
 
 See the wg-quick and wg man pages for info on the config file entries. The optional MTU parameter 
 is included to try to avoid potential fragmentation errors during packet transmission.
@@ -133,7 +133,9 @@ sudo systemctl enable wg-quick@wg0.service
 Check that ifconfig shows a new interface named wg0. WireGuard will start automatically on boot. 
 It's not normally necessary to shut it down but the command to do so is:
 
+```
 sudo wg-quick down wg0
+```
 
 
 ### 4.4 Enable IP forwarding
