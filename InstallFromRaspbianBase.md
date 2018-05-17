@@ -460,7 +460,7 @@ PersistentKeepalive = 21
 ```
 
 replacing client-private-key and server-public-key with the values generated previously. 
-Replace <server-ip> with the IP address of the eth0 interface on the server. During setup 
+Replace server-ip with the IP address of the eth0 interface on the server. During setup 
 and testing when both Pi's are connected to the same network this address can just be the 
 private network address as shown by the ifconfig command. Later it will need to be changed 
 to a public IP address or domain.
@@ -500,6 +500,13 @@ cmd ip $proto rule add fwmark 2 table $DEFAULT_TABLE
 This ensures that packets from wlan0 or eth0 that are intended for an address on the server's 
 local network will be routed into the tunnel even if the client Pi's public network has 
 conflicting addresses.
+
+Note that in this setup only packets from the devices connected to the Pi are routed into
+the VPN tunnel. Any packets created locally on the Pi will be routed to the local network
+and beyond. This is not a problem if the Pi desktop is only used to get connected to the
+public wifi. An alternative setup is possible in which the tunnel is the defautl route for
+all packets, however in that case WireGuard must be started manually each time after
+connecting to public wifi.
 
 
 ## 5.6 Bring up WireGuard
