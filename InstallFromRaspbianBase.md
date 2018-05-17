@@ -526,8 +526,6 @@ Edit file /etc/sysctl.conf and uncomment or add the line:
 net.ipv4.ip_forward=1
 ```
 
-This will allow packets to be forwarded between connected devices and the tunnel.
-
 Enable the change:
 
 ```
