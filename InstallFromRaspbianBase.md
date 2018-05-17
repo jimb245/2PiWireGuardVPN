@@ -513,6 +513,7 @@ connecting to public wifi.
 
 ```
 sudo wg-quick up wg0
+sudo systemctl enable wg-quick@wg0.service
 ```
 
 Check that ifconfig shows a new interface named wg0. 
