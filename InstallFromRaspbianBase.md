@@ -459,7 +459,7 @@ Endpoint = <server-ip>:51820
 PersistentKeepalive = 21
 ```
 
-replacing <client-private-key> and <server-public-key> with the values generated previously. 
+replacing client-private-key and server-public-key with the values generated previously. 
 Replace <server-ip> with the IP address of the eth0 interface on the server. During setup 
 and testing when both Pi's are connected to the same network this address can just be the 
 private network address as shown by the ifconfig command. Later it will need to be changed 
