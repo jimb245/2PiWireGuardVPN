@@ -123,7 +123,7 @@ sudo chmod -v 600 /etc/wireguard/wg0.conf
 ```
 
 
-###4.3 Bring up WireGuard
+### 4.3 Bring up WireGuard
 
 ```
 sudo wg-quick up wg0
@@ -489,96 +489,122 @@ function add_default().
 
 - Delete the following line:
 
+```
 cmd ip $proto rule add not fwmark $DEFAULT_TABLE table $DEFAULT_TABLE
+```
 
 - Append the following line just after the remaining "ip $proto rule" commands:
 
+```
 cmd ip $proto rule add fwmark 2 table $DEFAULT_TABLE
+```
 
 This ensures that packets from wlan0 or eth0 that are intended for an address on the server's 
 local network will be routed into the tunnel even if the client Pi's public network has 
 conflicting addresses.
 
 
-5.6 Bring up WireGuard
+## 5.6 Bring up WireGuard
 
+```
 sudo wg-quick up wg0
+```
 
 Check that ifconfig shows a new interface named wg0. 
 
 
-5.7 Enable IP forwarding
+## 5.7 Enable IP forwarding
 
 Edit file /etc/sysctl.conf and uncomment or add the line:
 
+```
 net.ipv4.ip_forward=1
+```
 
 This will allow packets to be forwarded between connected devices and the tunnel.
 
 Enable the change:
 
+```
 sudo -s
 sysctl -p
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ctrl-d
+```
 
 
-5.8 Configure firewall rules
+## 5.8 Configure firewall rules
 
 Allow loopback connections:
 
+```
 sudo iptables -A INPUT -i lo -j ACCEPT
+```
 
 Allow established connections:
 
+```
 sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 sudo iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+```
 
 Allow connections on wlan0 or eth0:
 
+```
 sudo iptables -A INPUT -i wlan0 -m conntrack --ctstate NEW -j ACCEPT
 sudo iptables -A INPUT -i eth0 -m conntrack --ctstate NEW -j ACCEPT
+```
 
 Allow forwarding to the tunnel:
 
+```
 sudo iptables -A FORWARD -i wlan0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT
 sudo iptables -A FORWARD -i eth0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT
 sudo iptables -t mangle -A PREROUTING -p all -i wlan0 -j MARK --set-mark 2
 sudo iptables -t mangle -A PREROUTING -p all -i eth0 -j MARK --set-mark 2
+```
 
 Enable NAT for packets entering the tunnel:
 
+```
 sudo iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE
+```
 
 Set default policies:
 
+```
 sudo iptables -P INPUT DROP
 sudo iptables -P FORWARD DROP
 sudo iptables -P OUTPUT ACCEPT
+```
 
 Make the rules persistent:
- 
+
+```
 sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+```
 
 and Insert the following line in /etc/rc.local before the "exit 0" line:
 
+```
 iptables-restore < /etc/iptables.ipv4.nat
+```
 
 
 
-6. Test VPN tunnel locally
+# 6. Test VPN tunnel locally
 
 Connect a device to one of the client private interfaces and start a browser. If web access is working then as a sanity check confirm that there is traffic through the server's wg0 interface. This can be done simply on the server desktop with the command "ifconfig wg0", which will show packet transmitted/received counts. Alternatively, monitor the traffic level using "vnstat -l -i wg0". Also check that DNS requests are not leaking outside the tunnel by using a website like dsnleak.com.
 
 
 
-7. Check security
+# 7. Check security
 
 If not already done, change to non-default passwords for ssh and vnc, at least on the client Pi. Check that there are no open ports on the client Pi public wifi side, using a utility like nmap.
 
 
 
-8. Test the VPN tunnel remotely
+# 8. Test the VPN tunnel remotely
 
 For remote testing the server IP setting in the clients WireGuard config file must point to a public address or host and the WireGuard port on the server must be accessible for udp. Since ISP-assigned addresses normally do not change very often a workable method is to just use the numeric IP and forward the port on the local router. Alternatively a DDNS service can be used to get a fixed host name instead.
 
@@ -586,7 +612,9 @@ Now it should be possible to connect to the server from any wifi location. A por
 
 Use a site like whoer.net to check that the ip address is the same as the WireGuard server. If the wifi interface is not needed it can be disabled/enabled with the commands:
 
-    sudo ifdown wlan1
-    sudo ifup wlan1
+```
+sudo ifdown wlan1
+sudo ifup wlan1
+```
 
 To avoid sdcard damage use the VNC desktop to shut down the Pi at the end of the session. 
