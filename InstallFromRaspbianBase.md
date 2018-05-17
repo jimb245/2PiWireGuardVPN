@@ -12,14 +12,14 @@ the on-board wifi - later both of those will be reconfigured as separate private
 portable devices can connect to. The final network setup looks like:
 
 
-*10.200.200.0/24 subnet for the tunnel network between the client and server.
-*10.200.200.1 for the server tunnel interface (wg0)
-*10.200.200.2 for the client tunnel interface (wg0)
-*10.100.100.0/24 subnet for the wireless network client hosts on wlan0 (on-board wifi).
-*10.100.100.1 for the client wireless network interface (wlan0)
-*10.150.150.0/24 subnet for the wired network client hosts on eth0.
-*10.150.150.1 for the client wired network interface (eth0)
-*Public wifi DHCP assigns IP for Client Pi dongle interface (eth1)
+* 10.200.200.0/24 subnet for the tunnel network between the client and server.
+* 10.200.200.1 for the server tunnel interface (wg0)
+* 10.200.200.2 for the client tunnel interface (wg0)
+* 10.100.100.0/24 subnet for the wireless network client hosts on wlan0 (on-board wifi).
+* 10.100.100.1 for the client wireless network interface (wlan0)
+* 10.150.150.0/24 subnet for the wired network client hosts on eth0.
+* 10.150.150.1 for the client wired network interface (eth0)
+* Public wifi DHCP assigns IP for Client Pi dongle interface (eth1)
 
 Use terminals on the VNC desktops for the following steps.
 
