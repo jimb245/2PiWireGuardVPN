@@ -62,7 +62,7 @@ Check that the wg and wg-quick commands are installed
 
 
 
-3. Generate WireGuard encryption keys for both Pi's
+## 3. Generate WireGuard encryption keys for both Pi's
 
 On the server run:
 
@@ -82,9 +82,9 @@ The client public key value will be need to be transferred to the server.
 
 
 
-4. Server-specific configuration
+## 4. Server-specific configuration
 
-4.1 Install utility packages
+### 4.1 Install utility packages
 
 ```
 sudo apt update && sudo apt-get upgrade
@@ -92,7 +92,7 @@ sudo apt-get install dnsutils iptables-persistent
 ```
 
 
-4.2 WireGuard config file
+### 4.2 WireGuard config file
 
 Create file /etc/wireguard/wg0.conf containing:
 
@@ -123,7 +123,7 @@ sudo chmod -v 600 /etc/wireguard/wg0.conf
 ```
 
 
-4.3 Bring up WireGuard
+###4.3 Bring up WireGuard
 
 ```
 sudo wg-quick up wg0
@@ -136,7 +136,7 @@ It's not normally necessary to shut it down but the command to do so is:
 sudo wg-quick down wg0
 
 
-4.4 Enable IP forwarding
+### 4.4 Enable IP forwarding
 
 Edit file /etc/sysctl.conf and uncomment or add the line:
 
@@ -156,7 +156,7 @@ ctrl-d
 ```
 
 
-4.5 Configure firewall rules
+### 4.5 Configure firewall rules
 
 Allow loopback connections:
 
@@ -219,7 +219,7 @@ netfilter-persistent save
 ```
 
 
-4.6 Install the DNS server
+### 4.6 Install the DNS server
 
 This setup uses the unbound DNS resolver, as recommended in www.ckn.io, 
 "WireGuard VPN: Typical Setup". DNS requests by devices connected to the client 
@@ -228,14 +228,19 @@ of information from the devices.
 
 Begin by installing the packages:
 
+```
 sudo apt-get install unbound unbound-host
+```
 
 Fetch the list of root servers:
 
+```
 sudo curl -o /var/lib/unbound/root.hints https://www.internic.net/domain/named.cache
+```
 
 Replace the contents of the configuration file /etc/unbound/unbound.conf with:
 
+```
 server:
 
   num-threads: 4
@@ -285,30 +290,37 @@ server:
   cache-max-ttl: 14400
   prefetch: yes
   prefetch-key: yes
+```
 
 
 Enable the service:
 
+```
 chown -R unbound:unbound /var/lib/unbound
 systemctl enable unbound
+```
 
 Test the service:
 
+```
 sudo unbound-host -v  -C /etc/unbound/unbound.conf cloudflare.com
+```
 
 unbound supports DNSSEC, as does cloudflare
 
 
 
-5. Client-specific configuration
+# 5. Client-specific configuration
 
-5.1 Install utility packages
+## 5.1 Install utility packages
 
+```
 sudo apt update && sudo apt-get upgrade
 sudo apt-get install hostapd dnsmasq dnsutils
+```
 
 
-5.2 Configure wifi dongle
+## 5.2 Configure wifi dongle
 
 Insert the dongle into a USB slot.  The dongle will provide the connection to public wifi. 
 Raspbian Stretch includes dhcpcd, a DHCP utility that is used to acquire an IP address for 
@@ -316,26 +328,32 @@ the dongle's wlan1 interface.
 
 Append the following lines to /etc/dhcpcd.conf:
 
+```
 denyinterfaces wlan0
 denyinterfaces eth0
 interface wlan1
+```
 
 Check if /etc/wpa_supplicant/wpa_supplicant.conf contains an entry for the local wifi network. If not, edit the file to append an entry specifiying the network ssid and password:
 
+```
 network={
 	ssid="network name"
 	psk="network password"
 	key_mgmt=WPA-PSK
 }
+```
 
 Restart dhcpcd with the following command. The wlan0 and eth0 interfaces will be down so 
 reconnect to VNC using the wlan1 interface. The IP address can be determined from the 
 local router's UI or from apps like Fing.
 
+```
 sudo systemctl restart dhcpcd
+```
 
 
-5.3 Configure wlan0 and eth0
+## 5.3 Configure wlan0 and eth0
 
 wlan0 and eth0 are the interfaces used by portable devices to connect to the Pi. The wlan0 wifi is 
 managed by the hostapd utility. DHCP services for both networks are provided by the dnsmasq utility. 
@@ -346,6 +364,7 @@ with future Raspbian updates.
 
 Append interface definitions to /etc/network/interfaces:
 
+```
 auto wlan0
 iface wlan0 inet static
     address 10.100.100.1
@@ -355,10 +374,12 @@ allow-hotplug eth0
 iface eth0 inet static
     address 10.150.150.1
     netmask 24
+```
 
 Replace the contents of /etc/hostapd/hostapd.conf with the following lines, substituting values 
 for ssid and wpa_password:
 
+```
 interface=wlan0
 hw_mode=g
 channel=11
@@ -374,11 +395,13 @@ wpa=2
 wpa_key_mgmt=WPA-PSK
 rsn_pairwise=CCMP
 wpa_passphrase=<some password>
+```
 
 Change the wifi channel number if desired.  Note that this setup only supports a single channel.
 
 Replace the contents of /etc/dnsmasq.conf with the lines:
 
+```
 dhcp-authoritative
 read-ethers
 bogus-priv
@@ -393,30 +416,36 @@ interface=eth0
   dhcp-range=eth0,10.150.150.50,10.150.150.100,12h
 
 dhcp-option=option:dns-server,10.200.200.1
+```
 
 Insert the following line in /etc/rc.local before the "exit 0" line.  This is a workaround to 
 bring up dhcpcd on boot since systemd will fail to start it when there are interface 
 definitions present in /etc/network/interfaces.
 
+```
 dhcpcd
+```
 
 
 Start the wlan0 and eth0 networks:
 
+```
 sudo ifup wlan0
 sudo service dnsmasq start
 sudo service hostapd start
 sudo update-rc.d hostapd enable
+```
 
 Check the setup by connecting to the VNC desktop over each network. To test the wifi network 
 connect using the ssid and password chosen above and the addresses 10.100.100.1. To test the 
 wired ethernet connection use the addres 10.150.150.1.
 
 
-5.4 Create client config file for WireGuard
+## 5.4 Create client config file for WireGuard
 
 Create file /etc/wireguard/wg0.conf containing:
 
+```
 [Interface]
 Address = 10.200.200.2/32
 PrivateKey = <client-private-key>
@@ -428,6 +457,7 @@ PublicKey = <server-public-key>
 AllowedIPs = 0.0.0.0/0
 Endpoint = <server-ip>:51820
 PersistentKeepalive = 21
+```
 
 replacing <client-private-key> and <server-public-key> with the values generated previously. 
 Replace <server-ip> with the IP address of the eth0 interface on the server. During setup 
@@ -437,14 +467,16 @@ to a public IP address or domain.
 
 Ensure that only root can access the file:
 
+```
 sudo chown -v root:root /etc/wireguard/wg0.conf
 sudo chmod -v 600 /etc/wireguard/wg0.conf
+```
 
 See the wg-quick and wg man pages for info on the config file entries. The optional MTU 
 parameter is included to try to avoid potential fragmentation errors during packet transmission.
 
 
-5.5 Edit the wg-quick script
+## 5.5 Edit the wg-quick script
 
 A change in the wq-quick script is needed in order to allow access to the server's local network 
 from devices attached to the client Pi. For example, it might be desired to access a file 
