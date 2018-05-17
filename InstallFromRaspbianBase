@@ -4,12 +4,12 @@ VPN Setup Starting From Base Raspbian Images
 
 1. Install Raspbian
 
-Install Raspbian Stretch on the Pi's in the usual way. Eventually the client needs to be configured to 
-boot headless with VNC desktop and it's probably good to set up both Pi's that way from the beginning. 
-Use a wired ethernet connection to the server Pi so that its eth0 interface has a known address on the 
-local network. The initial network connection to the client Pi can be ethernet or the on-board wifi - 
-later both of those will be reconfigured as separate private networks that portable devices can 
-connect to. The final network setup looks like:
+Install Raspbian Stretch on the Pi's in the usual way. Eventually the client needs to be configured 
+to boot headless with VNC desktop and it's probably good to set up both Pi's that way from the 
+beginning. Use a wired ethernet connection to the server Pi so that its eth0 interface has a known 
+address on the local network. The initial network connection to the client Pi can be ethernet or 
+the on-board wifi - later both of those will be reconfigured as separate private networks that 
+portable devices can connect to. The final network setup looks like:
 
 
 10.200.200.0/24 subnet for the tunnel network between the client and server.
@@ -31,17 +31,21 @@ This is adapted from wireguard.com/install, "Option B) Compiling from Source", f
 
 Install linux header files for Raspbian:
 
+```
 sudo apt-get update && sudo apt-get upgrade
 sudo apt-get install raspberrypi-linux-headers
 sudo reboot
+```
 
 Check that kernel version from "uname -r" matches directory in /lib/modules. Otherwise the build is 
 likely to fail. 
 
 Install some additional libraries:
 
+```
 sudo apt-get update
 sudo apt-get install libmnl-dev libelf-dev build-essential pkg-config
+```
 
 Get the current WireGuard snapshot and build it:
 
