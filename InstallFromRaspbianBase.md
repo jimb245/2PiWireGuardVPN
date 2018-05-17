@@ -306,7 +306,7 @@ Test the service:
 sudo unbound-host -v  -C /etc/unbound/unbound.conf cloudflare.com
 ```
 
-unbound supports DNSSEC, as does cloudflare
+unbound supports DNSSEC.
 
 
 
