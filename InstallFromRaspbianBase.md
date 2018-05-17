@@ -12,14 +12,14 @@ the on-board wifi - later both of those will be reconfigured as separate private
 portable devices can connect to. The final network setup looks like:
 
 
-10.200.200.0/24 subnet for the tunnel network between the client and server.
-10.200.200.1 for the server tunnel interface (wg0)
-10.200.200.2 for the client tunnel interface (wg0)
-10.100.100.0/24 subnet for the wireless network client hosts on wlan0 (on-board wifi).
-10.100.100.1 for the client wireless network interface (wlan0)
-10.150.150.0/24 subnet for the wired network client hosts on eth0.
-10.150.150.1 for the client wired network interface (eth0)
-Public wifi DHCP assigns IP for Client Pi dongle interface (eth1)
+*10.200.200.0/24 subnet for the tunnel network between the client and server.
+*10.200.200.1 for the server tunnel interface (wg0)
+*10.200.200.2 for the client tunnel interface (wg0)
+*10.100.100.0/24 subnet for the wireless network client hosts on wlan0 (on-board wifi).
+*10.100.100.1 for the client wireless network interface (wlan0)
+*10.150.150.0/24 subnet for the wired network client hosts on eth0.
+*10.150.150.1 for the client wired network interface (eth0)
+*Public wifi DHCP assigns IP for Client Pi dongle interface (eth1)
 
 Use terminals on the VNC desktops for the following steps.
 
@@ -49,12 +49,14 @@ sudo apt-get install libmnl-dev libelf-dev build-essential pkg-config
 
 Get the current WireGuard snapshot and build it:
 
+```
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
 tar xvf /WireGuard-x.x.x.tar.xz
 
 cd WireGuard/src
 make
 sudo make install
+```
 
 Check that the wg and wg-quick commands are installed
 
@@ -64,13 +66,17 @@ Check that the wg and wg-quick commands are installed
 
 On the server run:
 
+```
 wg genkey | tee server_private_key | wg pubkey > server_public_key
+```
 
 The server public key value will need to be transferred to the client.
 
 On the client run:
 
+```
 wg genkey | tee client_private_key | wg pubkey > client_public_key
+```
 
 The client public key value will be need to be transferred to the server.
 
@@ -80,14 +86,17 @@ The client public key value will be need to be transferred to the server.
 
 4.1 Install utility packages
 
+```
 sudo apt update && sudo apt-get upgrade
 sudo apt-get install dnsutils iptables-persistent
+```
 
 
 4.2 WireGuard config file
 
 Create file /etc/wireguard/wg0.conf containing:
 
+```
 [Interface]
 Address = 10.200.200.1/32
 DNS = 10.200.200.1
@@ -99,6 +108,7 @@ SaveConfig = true
 [Peer]
 PublicKey = <client-public-key>
 AllowedIPs = 10.200.200.2/32
+```
 
 replacing <server-private-key> and <client-public-key> with the values generated previously.
 
@@ -107,14 +117,18 @@ is included to try to avoid potential fragmentation errors during packet transmi
 
 Ensure that only root can access the file:
 
+```
 sudo chown -v root:root /etc/wireguard/wg0.conf
 sudo chmod -v 600 /etc/wireguard/wg0.conf
+```
 
 
 4.3 Bring up WireGuard
 
+```
 sudo wg-quick up wg0
 sudo systemctl enable wg-quick@wg0.service
+```
 
 Check that ifconfig shows a new interface named wg0. WireGuard will start automatically on boot. 
 It's not normally necessary to shut it down but the command to do so is:
@@ -126,61 +140,83 @@ sudo wg-quick down wg0
 
 Edit file /etc/sysctl.conf and uncomment or add the line:
 
+```
 net.ipv4.ip_forward=1
+```
 
 This will allow packets arriving in the VPN tunnel to continue out of the server.
 
 Enable the change:
 
+```
 sudo -s
 sysctl -p
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ctrl-d
+```
 
 
 4.5 Configure firewall rules
 
 Allow loopback connections:
 
+```
 sudo iptables -A INPUT -i lo -j ACCEPT
+```
 
 Allow established connections:
 
+```
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+```
 
 Allow ssh and VNC connections:
 
+```
 sudo iptables -A INPUT -p tcp -m tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A INPUT -p tcp -m tcp --dport 5900 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+```
 
 Allow VPN connections on WireGuard port:
 
+```
 sudo iptables -A INPUT -p udp -m udp --dport 51820 -m conntrack --ctstate NEW -j ACCEPT
+```
 
 Allow DNS connections from clients through the VPN tunnel:
 
+```
 sudo iptables -A INPUT -s 10.200.200.0/24 -p tcp -m tcp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
 sudo iptables -A INPUT -s 10.200.200.0/24 -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
+```
 
 Allow forwarding from the tunnel:
 
+```
 sudo iptables -A FORWARD -i wg0 -m conntrack --ctstate NEW -j ACCEPT
+```
 
 Enable NAT for packets leaving the server from the tunnel:
 
+```
 sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o eth0 -j MASQUERADE
+```
 
 Set default policies:
 
+```
 sudo iptables -P INPUT DROP
 sudo iptables -P FORWARD DROP
 sudo iptables -P OUTPUT ACCEPT
+```
 
 Make the rules persistent:
 
+```
 systemctl enable netfilter-persistent
 netfilter-persistent save
+```
 
 
 4.6 Install the DNS server
