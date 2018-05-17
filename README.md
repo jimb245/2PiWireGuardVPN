@@ -185,7 +185,9 @@ Connect a device to one of the client private interfaces and start a browser on 
 
 ## Test the VPN client remotely
 
-Now you should be able to connect to the server from any wifi location. Use a site like whoer.net to check that your ip address is the same as your WireGuard server. 
+Now it should be possible to connect to the server from any wifi location. A portable device with a VNC viewer app is required to start the connection. The device can connect using either the wifi or ethernet private network. The wifi widget on the VNC desktop is used to select the ssid and sign in. Captive portals will require starting a browser on the desktop to get access.
+
+In a web browser on the attached device use a site like whoer.net to check that your ip address is the same as your WireGuard server. 
 
 If the wifi interface is not needed it can be disabled/enabled with the commands:
 
