@@ -219,7 +219,7 @@ sudo ifup wlan1
 
 - The wifi channel used by the client Pi's private interface is set in /etc/hostapd/hostapd.conf. It can be changed if needed to avoid interference. A reboot is needed following a change.
     
-- In the client Pi setup for Raspbian Stretch (but not Jessie) there seems to be an incompatibility when combining dhcpcd, dnsmasq, and hostapd services to handle both the external DHCP service for the public interface and the internal service for the private interfaces. To work around this problem /etc/rc.local is used to start dhcpcd on boot because it is prevented from starting normally when /etc/network/interfaces contains interface definitions. This is a hack that may need to be revisited with future Raspbian releases.
+- In the client Pi setup for Raspbian Stretch (but not Jessie) there seems to be an incompatibility with using dhcpcd, dnsmasq, and hostapd to handle the interfaces and services that are needed. It's also has been noted in some forum posts. To work around this problem /etc/rc.local is used to start dhcpcd on boot because it is prevented from starting normally when /etc/network/interfaces contains interface definitions. This is a hack that may need to be revisited with future Raspbian releases.
 
 ## References
 
