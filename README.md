@@ -107,9 +107,7 @@ wg genkey | tee client_private_key | wg pubkey > client_public_key
 sudo nano /etc/wireguard/wg0.conf
 ```
 
-In /etc/wireguard/wg0.conf substitute the string from client_private_key into the file, then substiute the server_public_key value copied earlier from the server. Lastly substitute the public IP address of your network into the file. You can get this from your router user interface or by browsing a website like whoer.net. If the network IP is not very static then a DDNS hostname can also sudo systemctl enable wg-quick@wg0.service
-
-be used.
+In /etc/wireguard/wg0.conf substitute the string from client_private_key into the file, then substiute the server_public_key value copied earlier from the server. Lastly substitute the public IP address of your network into the file. You can get this from your router user interface or by browsing a website like whoer.net. If the network IP is not very static then a DDNS hostname can also be used.
 
 Copy the string from client_public_key over to your VNC viewer machine.
 
