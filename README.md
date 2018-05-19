@@ -20,8 +20,7 @@ Software versions on the images:
 
 - Two Raspberry Pi 3's with cases
 - Two 8GB microSD cards
-- Pi-compatible power supplies
-- Pi-compatiblle battery and cable - optional
+- Pi-compatible power sources
 - Pi-compatible USB wifi dongle
 - Ethernet cable
 - Private network with wifi and ethernet port
