@@ -8,7 +8,9 @@ To use this 2-Pi VPN the server is connected with an ethernet cable to your home
 
 The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals. At the end of the session the desktop can be used to safely shutdown the Pi to avoid potentially corrupting the sdcard.
 
-The wireGuard developers are working on cross-platform apps so the usefulness of the access point approach versus apps depends on how many devices are connecting and what apps are available. The access point does provide an extra layer of isolation and updatable security.
+The VPN is the "routed" type, not "bridged". The portable devices can reach the internet and the server's local network, but not the reverse. Systems on the server's local network can be addressed by numeric address, or by hostname if name entries are added to the server's configuration.
+
+The WireGuard developers are working on cross-platform apps so the usefulness of the access point approach versus apps depends on how many devices are connecting and what apps are available. The access point does provide an extra layer of isolation and updatable security.
 
 Of course installing the server on a home network won't help if the goal is to prevent snooping by an ISP. For that you could consider using a cloud server. Reference 3. below explains how to set up a WireGuard server on a Ubuntu system, for example. The portable access point could be used with either server. On the other hand having a server with your home IP can help with some services that try to block VPN's or impose geographic restrictions.
 
@@ -163,14 +165,28 @@ sudo systemctl enable wg-quick@wg0.service
 
 Check that the "ifconfig" command shows a "wg0" interface created. From now on WireGuard will start on boot.
 
-#### 5.4 Change default login passwords
+#### 5.4 Define local DNS data - optional
+
+Append local hostname/address data to /etc/unbound/unbound.conf.
+It could be as simple as:
+
+```local-data: "myserver A 10.0.0.5"
+```
+
+Then restart unbound:
+
+```
+sudo systemctl restart unbound
+```
+
+#### 5.5 Change default login passwords
 
 - Change the pi user password with the passwd command
 - Change the VNC password using the VNC settings menu on the virtual desktop
 
 Good to do even though it's behind a router.
 
-#### 5.5 Close the VNC connection
+#### 5.6 Close the VNC connection
 
 <br><br>
 
