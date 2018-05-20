@@ -292,6 +292,11 @@ server:
   prefetch-key: yes
 ```
 
+Optionally append local hostname/address data to /etc/unbound/unbound.conf. It could be as simple as:
+
+```
+local-data: "myserver A 10.0.0.5"
+```
 
 Enable the service:
 
