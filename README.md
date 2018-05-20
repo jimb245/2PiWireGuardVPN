@@ -170,7 +170,7 @@ Check that the "ifconfig" command shows a "wg0" interface created. From now on W
 Append local hostname/address data to /etc/unbound/unbound.conf.
 It could be as simple as:
 
-```local-data: "myserver A 10.0.0.5"
+```local-data: \"myserver A 10.0.0.5\"
 ```
 
 Then restart unbound:
