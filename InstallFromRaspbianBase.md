@@ -453,7 +453,7 @@ Check the version of hostapd installed earlier from the Raspbian/Debian reposito
 hostapd -v
 ```
 
-If prior to 2.6 then a newer version should be installed to avoid a possible wifi issue which can cause a disconnect and need a reboot to clear. To get the new version requires building hostapd from source. The following steps are based on [this reference](https://wireless.wiki.kernel.org/en/users/documentation/hostapd). The existing install can be retained to provide the boot init scripts - only the hostapd binary will be replaced.
+If prior to 2.6 then a newer version should be installed to avoid a possible wifi issue which can cause a disconnect and need a reboot to clear. Getting the new version requires building hostapd from source. The existing install can be retained to provide the boot init scripts - only the hostapd binary will be replaced.The following steps are based on [this reference](https://wireless.wiki.kernel.org/en/users/documentation/hostapd).
 
 ```
 sudo apt-get install libnl-dev libssl-dev
@@ -485,8 +485,9 @@ sudo ./hostapd /etc/hostapd/hostapd.conf
 
 Check that the wifi service is up and working. If yes then move or rename the previously install hostapd binary and replace it with the new version. Restart the service:
 
+```
 sudo systemctl up hostapd.service
-
+```
 
 ## 5.5 Create client config file for WireGuard
 
