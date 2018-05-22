@@ -445,8 +445,50 @@ Check the setup by connecting to the VNC desktop over each network. To test the 
 connect using the ssid and password chosen above and the addresses 10.100.100.1. To test the 
 wired ethernet connection use the addres 10.150.150.1.
 
+## 5.4 Update hostapd if needed
 
-## 5.4 Create client config file for WireGuard
+Check the version of hostapd installed earlier from the Raspbian/Debian repositories:
+
+```
+hostapd -v
+```
+
+If prior to 2.6 then a newer version should be installed to avoid a possible wifi issue which can cause a disconnect and need a reboot to clear. To get the new version requires building hostapd from source. The following steps are based on [this reference](https://wireless.wiki.kernel.org/en/users/documentation/hostapd). The existing install can be retained to provide the boot init scripts - only the hostapd binary will be replaced.
+
+```
+sudo apt-get install libnl-dev libssl-dev
+
+wget http://w1.fi/releases/hostapd-x.y.z.tar.gz
+tar xzvf hostapd-x.y.z.tar.gz
+cd hostapd-x.y.z/hostapd
+cp defconfig .config
+```
+
+Edit .config and check that following line is uncommented:
+
+```
+#CONFIG_DRIVER_NL80211=y
+```
+
+Compile the source:
+
+```
+make
+```
+
+Test the new binary:
+
+```
+sudo systemctl down hostapd.service
+sudo ./hostapd /etc/hostapd/hostapd.conf
+```
+
+Check that the wifi service is up and working. If yes then move or rename the previously install hostapd binary and replace it with the new version. Restart the service:
+
+sudo systemctl up hostapd.service
+
+
+## 5.5 Create client config file for WireGuard
 
 Create file /etc/wireguard/wg0.conf containing:
 
@@ -481,7 +523,7 @@ See the wg-quick and wg man pages for info on the config file entries. The optio
 parameter is included to try to avoid potential fragmentation errors during packet transmission.
 
 
-## 5.5 Edit the wg-quick script
+## 5.6 Edit the wg-quick script
 
 A change in the wq-quick script is needed in order to allow access to the server's local network 
 from devices attached to the client Pi. For example, it might be desired to access a file 
@@ -514,7 +556,7 @@ all packets, however in that case WireGuard must be started manually each time a
 connecting to public wifi.
 
 
-## 5.6 Bring up WireGuard
+## 5.7 Bring up WireGuard
 
 ```
 sudo wg-quick up wg0
@@ -524,7 +566,7 @@ sudo systemctl enable wg-quick@wg0.service
 Check that ifconfig shows a new interface named wg0. 
 
 
-## 5.7 Enable IP forwarding
+## 5.8 Enable IP forwarding
 
 Edit file /etc/sysctl.conf and uncomment or add the line:
 
@@ -542,7 +584,7 @@ ctrl-d
 ```
 
 
-## 5.8 Configure firewall rules
+## 5.9 Configure firewall rules
 
 Allow loopback connections:
 
