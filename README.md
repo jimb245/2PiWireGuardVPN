@@ -8,7 +8,7 @@ To use this 2-Pi VPN the server is connected with an ethernet cable to your home
 
 The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals. At the end of the session the desktop can be used to safely shutdown the Pi to avoid potentially corrupting the sdcard.
 
-The VPN is the "routed" type, not "bridged". The portable devices can reach the internet and the server's local network, but not the reverse. Systems on the server's local network can be addressed by numeric address, or by hostname if name entries are added to the server's configuration.
+In this setup the VPN is the "routed" type, not "bridged". The portable devices can reach the internet and the server's local network, but not the reverse. Systems on the server's local network can be addressed by numeric address, or by hostname if name entries are added to the server's configuration.
 
 The WireGuard developers are working on cross-platform apps so the usefulness of the access point approach versus apps depends on how many devices are connecting and what apps are available. The access point does provide an extra layer of isolation and updatable security.
 
