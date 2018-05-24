@@ -50,10 +50,12 @@ sudo apt-get install libmnl-dev libelf-dev build-essential pkg-config
 Get the current WireGuard snapshot and build it:
 
 ```
+mkdir ~/WireGuard
+cd ~/WireGuard
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
-tar xvf /WireGuard-x.x.x.tar.xz
+tar xvf WireGuard-x.x.x.tar.xz
 
-cd WireGuard/src
+cd WireGuard-x.x.x/src
 make
 sudo make install
 ```
