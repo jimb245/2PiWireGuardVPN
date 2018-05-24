@@ -71,7 +71,7 @@ This could be done later after getting the current version working.
 cd ~/WireGuard
 sudo cp /etc/wireguard/wg0.conf /tmp
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
-tar xvf /WireGuard-x.x.x.tar.xz
+tar xvf WireGuard-x.x.x.tar.xz
 
 cd WireGuard-x.x.x/src
 make
@@ -124,7 +124,7 @@ This could be done later after getting the current version working.
 cd ~/WireGuard
 sudo cp /etc/wireguard/wg0.conf /tmp
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
-tar xvf /WireGuard-x.x.x.tar.xz
+tar xvf WireGuard-x.x.x.tar.xz
 
 cd WireGuard-x.x.x/src
 make
