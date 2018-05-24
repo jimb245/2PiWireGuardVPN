@@ -69,9 +69,10 @@ Start a terminal window on the VNC desktop.
 
 This could be done later after getting the current version working.
 
+Get the latest snapshot from https://git.zx2c4.com/WireGuard
+
 ```
 cd ~/WireGuard
-sudo cp /etc/wireguard/wg0.conf /tmp
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
 tar xvf WireGuard-x.x.x.tar.xz
 
@@ -79,8 +80,11 @@ cd WireGuard-x.x.x/src
 make
 sudo make install
 
-sudo cp /tmp/wg0.conf /etc/wireguard
+modinfo wireguard
 ```
+
+Check that the revision date reported by modinfo matches the new snapshot.
+
 
 #### 3.4 Configure WireGuard
 
@@ -124,9 +128,10 @@ Use the wifi menu on the virtual desktop to connect the Pi to your local wifi ne
 
 This could be done later after getting the current version working.
 
+Get the latest snapshot from https://git.zx2c4.com/WireGuard
+
 ```
 cd ~/WireGuard
-sudo cp /etc/wireguard/wg0.conf /tmp
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
 tar xvf WireGuard-x.x.x.tar.xz
 
@@ -134,8 +139,11 @@ cd WireGuard-x.x.x/src
 make
 sudo make install
 
-sudo cp /tmp/wg0.conf /etc/wireguard
+modinfo wireguard
 ```
+
+Check that the revision date reported by modinfo matches the new snapshot.
+
 
 #### 4.4 Configure WireGuard
 
