@@ -63,10 +63,27 @@ Modify local router settings to forward port 51820. You will probably want to ei
 
 Determine the IP address assigned by your router to the server ethernet interface. In a VNC viewer app on a device on the local network connect to the server address using the default password, which is "raspberry". Start a terminal window on the VNC desktop.
 
-#### 3.3 Configure WireGuard
+### 3.3 Update WireGuard
 
-```cd ~/WireGuard
-umask 077
+This could be done later after getting the current version working.
+
+```
+cd ~/WireGuard
+sudo cp /etc/wireguard/wg0.conf /tmp
+wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
+tar xvf /WireGuard-x.x.x.tar.xz
+
+cd WireGuard/src
+make
+sudo make install
+
+sudo cp /tmp/wg0.conf /etc/wireguard
+```
+
+#### 3.4 Configure WireGuard
+
+```
+cd ~/WireGuard
 wg genkey | tee server_private_key | wg pubkey > server_public_key
 sudo nano /etc/wireguard/wg0.conf
 ```
@@ -99,7 +116,24 @@ using the default password, which is "raspberry".
 
 Use the wifi menu on the virtual desktop to connect the Pi to your local wifi network
 
-#### 4.3 Configure WireGuard
+### 4.3 Update WireGuard
+
+This could be done later after getting the current version working.
+
+```
+cd ~/WireGuard
+sudo cp /etc/wireguard/wg0.conf /tmp
+wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
+tar xvf /WireGuard-x.x.x.tar.xz
+
+cd WireGuard/src
+make
+sudo make install
+
+sudo cp /tmp/wg0.conf /etc/wireguard
+```
+
+#### 4.4 Configure WireGuard
 
 Start a terminal window on the VNC desktop.
 
@@ -113,7 +147,7 @@ In /etc/wireguard/wg0.conf substitute the string from client_private_key into th
 
 Copy the string from client_public_key over to your VNC viewer machine.
 
-#### 4.4 Start WireGuard
+#### 4.5 Start WireGuard
 
 ```
 sudo wg-quick up wg0
@@ -122,14 +156,14 @@ sudo systemctl enable wg-quick@wg0.service
 
 Check that the "ifconfig" command shows a "wg0" interface has been created. From now on wireGuard will start on boot.
 
-#### 4.5 Change default login passwords
+#### 4.6 Change default login passwords
 
 - Change the pi user password with the passwd command
 - Change the VNC password using the VNC settings menu on the virtual desktop
 
 The Pi is also protected by a firewall on the public interface and the fact that the private wifi key is secret.
 
-#### 4.6 Change default SSID and password of private wifi interface
+#### 4.7 Change default SSID and password of private wifi interface
 
 The current values are 'raspi' and 'raspberry'. Edit the config file and restart hostapd.
 
@@ -140,7 +174,7 @@ sudo systemctl restart hostapd
 
 Test the new passwords by reconnecting using the private wifi interface. If there are problems you can get back in using the wired connection to check settings or reboot.
 
-#### 4.7 Close the VNC connection
+#### 4.8 Close the VNC connection
 
 <br><br>
 
@@ -206,8 +240,8 @@ In a web browser on the attached device use a site like whoer.net to check that 
 If the wifi interface is not needed it can be disabled/enabled with the commands:
 
 ````
-sudo ifdown wlan1
-sudo ifup wlan1
+sudo systemctl stop hostapd.service
+sudo systemctl start hostapd.service
 ````
 
 <br><br>
