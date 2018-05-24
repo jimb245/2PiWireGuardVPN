@@ -665,8 +665,8 @@ Now it should be possible to connect to the server from any wifi location. A por
 Use a site like whoer.net to check that the ip address is the same as the WireGuard server. If the wifi interface is not needed it can be disabled/enabled with the commands:
 
 ```
-sudo ifdown wlan1
-sudo ifup wlan1
+sudo systemctl stop hostapd.service
+sudo systemctl start hostapd.service
 ```
 
 To avoid sdcard damage use the VNC desktop to shut down the Pi at the end of the session. 
