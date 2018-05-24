@@ -61,7 +61,9 @@ Modify local router settings to forward port 51820. You will probably want to ei
 
 #### 3.2 Access the server using VNC
 
-Determine the IP address assigned by your router to the server ethernet interface. In a VNC viewer app on a device on the local network connect to the server address using the default password, which is "raspberry". Start a terminal window on the VNC desktop.
+Determine the IP address assigned by your router to the server ethernet interface. In a VNC viewer app on a device on the local network connect to the server address using the default password, which is "raspberry". 
+
+Start a terminal window on the VNC desktop.
 
 #### 3.3 Update WireGuard
 
@@ -112,6 +114,8 @@ Then in the VNC viewer connect to the Pi address that corresponds to the interfa
 
 using the default password, which is "raspberry". 
 
+Start a terminal window on the VNC desktop.
+
 #### 4.2 Connect the public wifi interface
 
 Use the wifi menu on the virtual desktop to connect the Pi to your local wifi network
@@ -134,8 +138,6 @@ sudo cp /tmp/wg0.conf /etc/wireguard
 ```
 
 #### 4.4 Configure WireGuard
-
-Start a terminal window on the VNC desktop.
 
 ```
 cd ~/WireGuard
