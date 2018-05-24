@@ -73,7 +73,7 @@ sudo cp /etc/wireguard/wg0.conf /tmp
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
 tar xvf /WireGuard-x.x.x.tar.xz
 
-cd WireGuard/src
+cd WireGuard-x.x.x/src
 make
 sudo make install
 
@@ -92,7 +92,7 @@ In /etc/wireguard/wg0.conf substitute the string from server_private_key into th
 
 Copy the string from server_public_key over to your VNC viewer machine.
 
-#### 3.4 Close the VNC connection
+#### 3.5 Close the VNC connection
 
 <br><br>
 
@@ -126,7 +126,7 @@ sudo cp /etc/wireguard/wg0.conf /tmp
 wget https://git.zx2c4.com/WireGuard/snapshot/WireGuard-x.x.x.tar.xz
 tar xvf /WireGuard-x.x.x.tar.xz
 
-cd WireGuard/src
+cd WireGuard-x.x.x/src
 make
 sudo make install
 
@@ -137,8 +137,8 @@ sudo cp /tmp/wg0.conf /etc/wireguard
 
 Start a terminal window on the VNC desktop.
 
-```cd ~/WireGuard
-umask 077
+```
+cd ~/WireGuard
 wg genkey | tee client_private_key | wg pubkey > client_public_key
 sudo nano /etc/wireguard/wg0.conf
 ```
