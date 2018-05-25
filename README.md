@@ -266,8 +266,6 @@ sudo systemctl start hostapd.service
 
 - Try a browser on the client VNC desktop to confirm it has internet access.
 
-- Check if server can be pinged through the tunnel from client VNC desktop - ping 10.200.200.1 If not then there is likely a problem with WireGuard configuration or routing has been modified. 
-
 - Try a browser on the server VNC desktop to confirm it has internet access
 
 <br><br>
