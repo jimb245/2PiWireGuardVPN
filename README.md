@@ -179,7 +179,7 @@ The current values are 'raspi' and 'raspberry'. Edit the config file and restart
 
 ```
 sudo nano /etc/hostapd/hostapd.conf
-sudo systemctl restart hostapd
+sudo reboot
 ```
 
 Test the new passwords by reconnecting using the private wifi interface. If there are problems you can get back in using the wired connection to check settings or reboot.
