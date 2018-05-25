@@ -481,14 +481,14 @@ make
 Test the new binary:
 
 ```
-sudo systemctl down hostapd.service
+sudo systemctl stop hostapd.service
 sudo ./hostapd /etc/hostapd/hostapd.conf
 ```
 
-Check that the wifi service is up and working. If yes then move or rename the previously install hostapd binary and replace it with the new version. Restart the service:
+Check that the wifi service is up and working. If yes then move or rename the previously install hostapd binary and replace it with the new version.
 
 ```
-sudo systemctl up hostapd.service
+sudo systemctl start hostapd.service
 ```
 
 ## 5.5 Create client config file for WireGuard
