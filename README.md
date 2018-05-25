@@ -182,7 +182,7 @@ sudo nano /etc/hostapd/hostapd.conf
 sudo reboot
 ```
 
-Test the new passwords by reconnecting using the private wifi interface. If there are problems you can get back in using the wired connection to check settings or reboot.
+Test the new passwords by reconnecting using the private wifi interface. If there are problems you can get back in using the wired connection to check settings.
 
 #### 4.8 Close the VNC connection
 
@@ -217,12 +217,8 @@ It could be as simple as:
 ```
 local-data: "myserver A 10.0.0.5"
 ```
+Reboot the server before testing the new data.
 
-Then restart unbound:
-
-```
-sudo systemctl restart unbound
-```
 
 #### 5.5 Change default login passwords
 
