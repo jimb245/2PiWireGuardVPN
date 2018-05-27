@@ -489,6 +489,7 @@ Check that the wifi service is up and working. If yes then stop the test, move o
 
 ```
 sudo cp ./hostapd /usr/sbin/hostapd
+chown root:root /usr/sbin/hostapd
 sudo systemctl start hostapd.service
 ```
 
@@ -552,9 +553,9 @@ This ensures that packets from wlan0 or eth0 that are intended for an address on
 local network will be routed into the tunnel even if the client Pi's public network has 
 conflicting addresses.
 
-Note that in this setup only packets from the devices connected to the Pi are routed into
-the VPN tunnel. Any packets created locally on the Pi will be routed to the local network
-and beyond. This is not a problem if the Pi desktop is only used to get connected to the
+Note that in this setup only packets being forwarded from the devices connected to the Pi are 
+routed into the VPN tunnel. Any packets created locally on the Pi will be routed to the local 
+network and beyond. This is not a problem if the Pi desktop is only used to get connected to the
 public wifi. An alternative setup is possible in which the tunnel is the defautl route for
 all packets, however in that case WireGuard must be started manually each time after
 connecting to public wifi.
