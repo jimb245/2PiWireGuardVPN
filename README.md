@@ -144,6 +144,19 @@ modinfo wireguard
 
 Check that the revision date reported by modinfo matches the new snapshot.
 
+Edit /usr/bin/wg-quick and make the folowing two changes in function add_default().
+
+- Delete the following line:
+
+```
+cmd ip $proto rule add not fwmark $DEFAULT_TABLE table $DEFAULT_TABLE
+```
+
+- Append the following line just after the remaining "ip $proto rule" commands:
+
+```
+cmd ip $proto rule add fwmark 2 table $DEFAULT_TABLE
+```
 
 #### 4.4 Configure WireGuard
 
