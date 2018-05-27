@@ -478,16 +478,17 @@ Compile the source:
 make
 ```
 
-Test the new binary:
+Test the new binary on the command line:
 
 ```
 sudo systemctl stop hostapd.service
 sudo ./hostapd /etc/hostapd/hostapd.conf
 ```
 
-Check that the wifi service is up and working. If yes then move or rename the previously install hostapd binary and replace it with the new version.
+Check that the wifi service is up and working. If yes then stop the test, move or rename the previously install hostapd binary and replace it with the new version.
 
 ```
+sudo cp ./hostapd /usr/sbin/hostapd
 sudo systemctl start hostapd.service
 ```
 
