@@ -2,7 +2,7 @@
 
 ![alt text](https://github.com/jimb245/2PiWireGuardVPN/blob/master/2PiVPN.jpg)
 
-This post describes setting up a portable WireGuard VPN access point and server on Raspberry Pi 3's. The shortcut method is to start from the provided Raspbian-based image files. They contain all the necessary software so setup consists mainly of installing the images on the Pi's and editing some parameters like passwords and IP addresses. It's also a good idea to update WireGuard to the current snapshot since it is described as still in development phase by its authors. For reference the full setup procedure starting from the base Rasbian images is [here](InstallFromRaspbianBase.md). For general information about WireGuard see References 1-2 below. References 3-5 are install guides for some WireGuard configurations on Ubuntu and Raspbian.
+This post describes setting up a portable WireGuard VPN access point and server on Raspberry Pi 3's. The shortcut method is to start from the provided Raspbian-based image files. They contain all the necessary software so setup consists mainly of installing the images on the Pi's and editing some parameters like passwords and IP addresses. It's also a good idea to update WireGuard to the current snapshot since it is described as still in pre-release phase by its authors. For reference the full setup procedure starting from the base Rasbian images is [here](InstallFromRaspbianBase.md). For general information about WireGuard see References 1-2 below. References 3-5 are install guides for some WireGuard configurations on Ubuntu and Raspbian.
 
 To use this 2-Pi VPN the server is connected with an ethernet cable to your home network, or potentially any other protected network with internet access. UDP packets from the internet must be able to reach the WireGuard port on the server so the port needs to be forwarded on the local router. If you happen to be running an openwrt router then another minimalist alternative would be to install WireGuard on the router itself. 
 
@@ -280,6 +280,8 @@ sudo systemctl start hostapd.service
 - Try a browser on the client VNC desktop to confirm it has internet access.
 
 - Try a browser on the server VNC desktop to confirm it has internet access
+
+- If you updated WireGuard try reverting to the old version by running "make install" in the old version directory and then applying the same edit to wg-quick as described above.
 
 <br><br>
 
