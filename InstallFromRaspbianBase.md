@@ -537,28 +537,29 @@ or media server.
 Make a backup copy of /usr/bin/wg-quick and then make the folowing two changes in 
 function add_default().
 
-- Delete the following line:
+- Delete the following line. It's possible that updates have changed the script such that the exact line is not present. In that case it's necessary to examine the script changes in more detail to determine an equivalent change.
 
 ```
-cmd ip $proto rule add not fwmark $DEFAULT_TABLE table $DEFAULT_TABLE
+cmd ip $proto rule add not fwmark $table table $table
 ```
 
 - Append the following line just after the remaining "ip $proto rule" commands:
 
 ```
-cmd ip $proto rule add fwmark 2 table $DEFAULT_TABLE
+cmd ip $proto rule add fwmark 2 table $table
 ```
 
-This ensures that packets from wlan0 or eth0 that are intended for an address on the server's 
-local network will be routed into the tunnel even if the client Pi's public network has 
-conflicting addresses.
+This change ensures that packets forwarded from wlan0 or eth0 that are intended for an address on the 
+server's local network will be routed into the tunnel even if the client Pi's public network has 
+conflicting addresses. The fwmark referenced in the rule is added to packets by firewall rules
+added below.
 
 Note that in this setup only packets being forwarded from the devices connected to the Pi are 
 routed into the VPN tunnel. Any packets created locally on the Pi will be routed to the local 
 network and beyond. This is not a problem if the Pi desktop is only used to get connected to the
 public wifi. An alternative setup is possible in which the tunnel is the defautl route for
-all packets, however in that case WireGuard must be started manually each time after
-connecting to public wifi.
+all packets, however in that case the need to handle captive portals means that WireGuard must 
+be started manually each time after connecting to public wifi.
 
 
 ## 5.7 Bring up WireGuard
