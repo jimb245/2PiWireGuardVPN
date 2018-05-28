@@ -233,9 +233,10 @@ local-data: "myserver A 10.0.0.5"
 
 #### 5.5 Enable the unbound DNS resolver
 
+```
 sudo systemctl start unbound.service
 sudo systemctl enable unbound.service
-
+```
 
 #### 5.6 Change default login passwords
 
