@@ -144,9 +144,12 @@ modinfo wireguard
 
 Check that the revision date reported by modinfo matches the new snapshot.
 
-Edit /usr/bin/wg-quick and make the folowing two changes in function add_default().
+Edit the script /usr/bin/wg-quick and make the folowing two changes in function add_default().
 
-- Delete the following line:
+- Delete the following line. It's possible that the update has changed the script such
+that the exact line is not present. In that case it's necessary to either revert to the 
+original WireGuard version by running "make install" in that directory or to examine
+the script changes in more detail to determine an equivalent change.
 
 ```
 cmd ip $proto rule add not fwmark $DEFAULT_TABLE table $DEFAULT_TABLE
