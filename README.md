@@ -149,7 +149,9 @@ Edit the script /usr/bin/wg-quick and make the folowing two changes in function 
 - Delete the following line. It's possible that the update has changed the script such
 that the exact line is not present. In that case it's necessary to either revert to the 
 original WireGuard version by running "make install" in that directory or to examine
-the script changes in more detail to determine an equivalent change.
+the script changes in more detail to determine an equivalent change. The
+[full setup procedure](https://github.com/jimb245/2PiWireGuardVPN/blob/master/InstallFromRaspbianBase.md)
+has some additional information.
 
 ```
 cmd ip $proto rule add not fwmark $table table $table
