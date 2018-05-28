@@ -230,17 +230,21 @@ It could be as simple as:
 ```
 local-data: "myserver A 10.0.0.5"
 ```
-Reboot the server before testing the new data.
+
+#### 5.5 Enable the unbound DNS resolver
+
+sudo systemctl start unbound.service
+sudo systemctl enable unbound.service
 
 
-#### 5.5 Change default login passwords
+#### 5.6 Change default login passwords
 
 - Change the pi user password with the passwd command
 - Change the VNC password using the VNC settings menu on the virtual desktop
 
 Good to do even though it's behind a router.
 
-#### 5.6 Close the VNC connection
+#### 5.7 Close the VNC connection
 
 <br><br>
 
