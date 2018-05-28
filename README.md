@@ -152,13 +152,13 @@ original WireGuard version by running "make install" in that directory or to exa
 the script changes in more detail to determine an equivalent change.
 
 ```
-cmd ip $proto rule add not fwmark $DEFAULT_TABLE table $DEFAULT_TABLE
+cmd ip $proto rule add not fwmark $table table $table
 ```
 
 - Append the following line just after the remaining "ip $proto rule" commands:
 
 ```
-cmd ip $proto rule add fwmark 2 table $DEFAULT_TABLE
+cmd ip $proto rule add fwmark 2 table $table
 ```
 
 #### 4.4 Configure WireGuard
