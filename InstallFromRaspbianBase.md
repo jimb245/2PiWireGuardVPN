@@ -530,12 +530,25 @@ parameter is included to try to avoid potential fragmentation errors during pack
 
 ## 5.6 Edit the wg-quick script
 
-A change in the wq-quick script is needed in order to allow access to the server's local network 
-from devices attached to the client Pi. For example, it might be desired to access a file 
-or media server.
+The routing rules applied by the default wg-quick script would send any packets with a destination 
+in the subnet of the public wifi directly to the local network and send everything else into the
+VPN tunnel. This presents two problems for the current application. One is that local network
+addresses may conflict with the server's local network, preventing access to the latter. Second,
+when authenticating to a captive portal it's necessary for locally generated packets from a
+browser to reach the local network and not go into the tunnel. So WireGuard would need to be
+off during authentication and then be started up manually.
 
-Make a backup copy of /usr/bin/wg-quick and then make the folowing two changes in 
-function add_default().
+Using the modifed script packets forwarded from wlan0 or eth0, and only those packets,
+are routed to the tunnel. The fwmark referenced by the rule is added to packets by firewall
+rules added below. So it doesn't matter if the client Pi's public network has an
+address conflict with the server's local network. 
+
+Also WireGuard will not interfere with captive portal authentication since locally generated
+packets are sent to the local network. This setup assumes that the Pi desktop is only used to 
+get connected to the public wifi - otherwise it would leak data outside of the VPN.
+
+Make a backup copy of /usr/bin/wg-quick and then make the folowing two changes in function
+add_default().
 
 - Delete the following line. It's possible that updates have changed the script such that the exact line is not present. In that case it's necessary to examine the script changes in more detail to determine an equivalent change.
 
@@ -548,19 +561,6 @@ cmd ip $proto rule add not fwmark $table table $table
 ```
 cmd ip $proto rule add fwmark 2 table $table
 ```
-
-This change ensures that packets forwarded from wlan0 or eth0 that are intended for an address on the 
-server's local network will be routed into the tunnel even if the client Pi's public network has 
-conflicting addresses. The fwmark referenced in the rule is added to packets by firewall rules
-added below.
-
-Note that in this setup only packets being forwarded from the devices connected to the Pi are 
-routed into the VPN tunnel. Any packets created locally on the Pi will be routed to the local 
-network and beyond. This is not a problem if the Pi desktop is only used to get connected to the
-public wifi. An alternative setup is possible in which the tunnel is the defautl route for
-all packets, however in that case the need to handle captive portals means that WireGuard must 
-be started manually each time after connecting to public wifi.
-
 
 ## 5.7 Bring up WireGuard
 
