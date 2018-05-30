@@ -530,15 +530,15 @@ parameter is included to try to avoid potential fragmentation errors during pack
 
 ## 5.6 Edit the wg-quick script
 
-The routing rules applied by the default wg-quick script would send any packets with a destination 
-in the subnet of the public wifi directly to the local network and send everything else into the
-VPN tunnel. This presents two problems for the current application. One is that local network
+The routing policy rules configured by the default wg-quick script would send any packets with a 
+destination in the subnet of the public wifi directly to the local network and send everything else 
+into the VPN tunnel. This presents two problems for the current application. One is that local network
 addresses may conflict with the server's local network, preventing access to the latter. Second,
 when authenticating to a captive portal it's necessary for locally generated packets from a
 browser to reach the local network and not go into the tunnel. So WireGuard would need to be
 off during authentication and then be started up manually.
 
-Using the modifed script packets forwarded from wlan0 or eth0, and only those packets,
+Using the modifed script, packets forwarded from wlan0 or eth0, and only those packets,
 are routed to the tunnel. The fwmark referenced by the rule is added to packets by firewall
 rules added below. So it doesn't matter if the client Pi's public network has an
 address conflict with the server's local network. 
