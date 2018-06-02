@@ -20,7 +20,7 @@ Software versions on the images:
 
 ## What You Will Need
 
-- Two Raspberry Pi 3's with cases
+- Two Raspberry Pi 3 Model B's with cases
 - Two 8GB microSD cards
 - Pi-compatible power sources
 - Pi-compatible USB wifi dongle
@@ -28,7 +28,7 @@ Software versions on the images:
 - Private network with wifi and ethernet port
 - VNC client on a wired or wireless device
 
-The server doesn't require the onboard wifi of the Pi 3 so a Pi 2 could be substituted.
+The server doesn't use the onboard wifi of the Pi 3 so a Pi 2 or Pi 3 Model B+ could be substituted. The access point could be done with a Model B+ but setting up its newer wifi isn't covered here..
 
 ## Setup
 
