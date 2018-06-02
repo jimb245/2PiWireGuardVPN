@@ -152,8 +152,8 @@ sudo cp /usr/bin/wg-quick /usr/bin/wg-quick.orig
 sudo nano /usr/bin/wg-quick
 ```
 
-- Delete the following line. It's possible that the update has changed the script such
-that the exact line is not present. In that case it's necessary to either revert to the 
+- In function add_default() delete the following line. It's possible that the update has changed 
+the script such that the exact line is not present. In that case it's necessary to either revert to the 
 original WireGuard version by running "make install" in that directory or to examine
 the script changes in more detail to determine an equivalent change. The
 [full setup procedure](https://github.com/jimb245/2PiWireGuardVPN/blob/master/InstallFromRaspbianBase.md)
@@ -163,7 +163,7 @@ has some additional information.
 cmd ip $proto rule add not fwmark $table table $table
 ```
 
-- Append the following line just after the remaining "ip $proto rule" commands:
+- In function add_default() append the following line just after the remaining "ip $proto rule" commands:
 
 ```
 cmd ip $proto rule add fwmark 2 table $table
