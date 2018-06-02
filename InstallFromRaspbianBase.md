@@ -539,8 +539,7 @@ to some public website destination and have them routed to the local network, no
 WireGuard would need to be off during authentication and then be started up manually.
 
 Using the modifed script, packets forwarded from wlan0 or eth0, and only those packets,
-are routed to the tunnel. The fwmark referenced by the rule is added to packets by firewall
-rules added below. So it doesn't matter if the client Pi's public network has an
+are routed to the tunnel. So it doesn't matter if the client Pi's public network has an
 address conflict with the server's local network. 
 
 Also WireGuard will not interfere with captive portal authentication since locally generated
@@ -561,7 +560,7 @@ sudo nano /usr/bin/wg-quick
 cmd ip $proto rule add not fwmark $table table $table
 ```
 
-- Append the following line just after the remaining "ip $proto rule" commands. It sets up the route from attached devices to the tunnel at higher priority.
+- Append the following line just after the remaining "ip $proto rule" commands. It sets up the route from attached devices to the tunnel at higher priority. The fwmark referenced by the rule is added to packets by firewall rules added below.
 
 ```
 cmd ip $proto rule add fwmark 2 table $table
