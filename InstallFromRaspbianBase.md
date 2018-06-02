@@ -530,13 +530,13 @@ parameter is included to try to avoid potential fragmentation errors during pack
 
 ## 5.6 Edit the wg-quick script
 
-The routing policy rules configured by the default wg-quick script would send any packets with a 
+The routing policy rules configured by the original wg-quick script would send any packets with a 
 destination in the subnet of the public wifi directly to the local network and send everything else 
 into the VPN tunnel. This presents two problems for the current application. One is that local network
 addresses may conflict with the server's local network, preventing access to the latter. Second,
-when authenticating to a captive portal it's necessary for locally generated packets from a
-browser to reach the local network and not go into the tunnel. So WireGuard would need to be
-off during authentication and then be started up manually.
+when authenticating to a captive portal it's necessary for a local browser to be able to launch packets 
+to some public website destination and have them routed to the local network, not the tunnel. So 
+WireGuard would need to be off during authentication and then be started up manually.
 
 Using the modifed script, packets forwarded from wlan0 or eth0, and only those packets,
 are routed to the tunnel. The fwmark referenced by the rule is added to packets by firewall
@@ -547,16 +547,21 @@ Also WireGuard will not interfere with captive portal authentication since local
 packets are sent to the local network. This setup assumes that the Pi desktop is only used to 
 get connected to the public wifi - otherwise it would leak data outside of the VPN.
 
-Make a backup copy of /usr/bin/wg-quick and then make the folowing two changes in function
+Make a backup copy of wg-quick and then make the folowing two changes in function
 add_default().
 
-- Delete the following line. It's possible that updates have changed the script such that the exact line is not present. In that case it's necessary to examine the script changes in more detail to determine an equivalent change.
+```
+sudo cp /usr/bin/wg-quick /usr/bin/wg-quick.orig
+sudo nano /usr/bin/wg-quick
+```
+
+- Delete the following line. It sets up the default route into the tunnel, but at a lower priority than the route to the local network. It's possible that updates have changed the script such that the exact line is not present. In that case it's necessary to examine the script changes in more detail to determine an equivalent change.
 
 ```
 cmd ip $proto rule add not fwmark $table table $table
 ```
 
-- Append the following line just after the remaining "ip $proto rule" commands:
+- Append the following line just after the remaining "ip $proto rule" commands. It sets up the route from attached devices to the tunnel at higher priority.
 
 ```
 cmd ip $proto rule add fwmark 2 table $table
