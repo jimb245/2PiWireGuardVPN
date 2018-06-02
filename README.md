@@ -6,7 +6,7 @@ This post describes setting up a portable WireGuard VPN access point and server 
 
 To use this 2-Pi VPN the server is connected with an ethernet cable to your home network, or potentially any other protected network with internet access. UDP packets from the internet must be able to reach the WireGuard port on the server so the port needs to be forwarded on the local router. If you happen to be running an openwrt router then another minimalist alternative would be to install WireGuard on the router itself. 
 
-The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals. At the end of the session the desktop can be used to safely shutdown the Pi to avoid potentially corrupting the sdcard.
+The portable access point is similar to a travel router, with both public and private interfaces. You connect the public interface to a public wifi and connect your portable devices to the private interface, using either wifi or an ethernet cable. In practice you first connect to the private interface with a portable device that has a VNC client. Using the VNC desktop you connect the Pi to public wifi and if necessary start a browser in order to handle captive portals. At the end of the session the desktop can be used to safely shutdown the Pi to avoid potentially corrupting the sdcard. Alternatively a shutdown button can be added (Reference 6 is one of many how-to's), which also comes in handy if the wifi should fail for some reason and no ethernet-capable device is available to restart the Pi.
 
 In this setup the VPN is the "routed" type, not "bridged". The portable devices can reach the server's local network, but not the reverse. Systems on the server's local network can be addressed by numeric address, or by hostname if name entries are added to the server's configuration.
 
@@ -28,7 +28,7 @@ Software versions on the images:
 - Private network with wifi and ethernet port
 - VNC client on a wired or wireless device
 
-The server doesn't use the onboard wifi of the Pi 3 so a Pi 2 or Pi 3 Model B+ could be substituted. The access point could be done with a Model B+ but setting up its newer wifi isn't covered here..
+The server doesn't use the onboard wifi of the Pi 3 so a Pi 2 or Pi 3 Model B+ could be substituted. The access point could certainly be done with a Model B+ but setting up the newer wifi capabilities isn't covered here.
 
 ## Setup
 
