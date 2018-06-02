@@ -144,7 +144,13 @@ modinfo wireguard
 
 Check that the revision date reported by modinfo matches the new snapshot.
 
-Edit the script /usr/bin/wg-quick and make the folowing two changes in function add_default().
+The original wg-quick script does not implement quite the right routing rules for
+the client Pi application so the following two changes are needed.
+
+```
+sudo cp /usr/bin/wg-quick /usr/bin/wg-quick.orig
+sudo nano /usr/bin/wg-quick
+```
 
 - Delete the following line. It's possible that the update has changed the script such
 that the exact line is not present. In that case it's necessary to either revert to the 
