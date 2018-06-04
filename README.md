@@ -268,7 +268,7 @@ Connect a device to one of the client private interfaces and start a browser on 
 
 ## Test the VPN client remotely
 
-Now it should be possible to connect to the server from any wifi location. A portable device with a VNC viewer app is required to start the connection. The device can connect using either the wifi or ethernet private network. The wifi widget on the VNC desktop is used to select the ssid and sign in. Captive portals will require starting a browser on the desktop to get access.
+Now it should be possible to connect to the server from any wifi location. A portable device with a VNC viewer app is required to start the connection. The device can connect using either the wifi or ethernet private network. The wifi widget on the VNC desktop is used to select the ssid and sign in. Captive portals will require starting a browser on the desktop to get access. If you have trouble getting a response from the portal website try http://www.gstatic.com/generate_204.
 
 In a web browser on the attached device use a site like whoer.net to check that your ip address is the same as your WireGuard server. 
 
@@ -314,4 +314,5 @@ sudo systemctl start hostapd.service
 3. [WireGuard VPN: Typical Setup](https://www.ckn.io)
 4. [WireGuard VPN: Portable Raspberry Pi Setup](https://www.ckn.io)
 5. [Building an encrypted travel wifi router](https://danrl.com)
+6. [ADD AN OFF-SWITCH TO POWER DOWN YOUR PI](https//www.raspberrypi.org/magpi/off-switch-raspberry-pi)
 
