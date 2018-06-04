@@ -314,5 +314,4 @@ sudo systemctl start hostapd.service
 3. [WireGuard VPN: Typical Setup](https://www.ckn.io)
 4. [WireGuard VPN: Portable Raspberry Pi Setup](https://www.ckn.io)
 5. [Building an encrypted travel wifi router](https://danrl.com)
-6. [ADD AN OFF-SWITCH TO POWER DOWN YOUR PI](https//www.raspberrypi.org/magpi/off-switch-raspberry-pi)
-
+6. [ADD AN OFF-SWITCH TO POWER DOWN YOUR PI](https://howchoo.com/g/mwnlytk3zmm/how-to-add-a-power-button-to-your-raspberry-pi)
